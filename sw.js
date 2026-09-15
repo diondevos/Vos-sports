@@ -1,6 +1,6 @@
 /* Vos Sports — app shell cache. The page itself is fetched network-first so an
    update lands on the next open; the shell falls back to cache when offline. */
-const VERSION = "vos-sports-20260915-2019";
+const VERSION = "vos-sports-20260915-2031";
 const SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png"];
 self.addEventListener("install", (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting()));
