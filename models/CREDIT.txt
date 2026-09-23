@@ -1,0 +1,7 @@
+skeletal.glb and muscular.glb are Z-Anatomy (https://www.z-anatomy.com/), a corrected and
+re-coloured derivative of BodyParts3D by the Database Center for Life Science (Japan).
+Licensed CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+Packaged for the web by https://github.com/jeremyspm/flesh-and-bone
+The credit shown in the app is the licence requirement: do not remove it.
+
+draco/ is the Draco mesh decoder from three.js 0.147 (Apache 2.0, Google).
