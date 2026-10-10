@@ -177,6 +177,12 @@ button.theme-btn {
 button.theme-btn:hover { color: var(--ink); border-color: var(--muted); }
 button.theme-btn svg { width: 15px; height: 15px; flex: none; }
 button.theme-btn .lbl { min-width: 38px; text-align: left; }
+#profile-btn .lbl { min-width: 0; }
+.pf-block { border-top: 1px solid var(--rule); padding-top: 16px; margin-top: 4px; }
+.pf-block:first-child { border-top: none; padding-top: 0; margin-top: 0; }
+.pf-block h3 { margin: 0 0 10px; font-size: 13px; font-weight: 600; }
+.pf-block .hint { font-size: 12.5px; color: var(--muted); margin: 8px 0 0; line-height: 1.5; }
+.pf-fields { display: grid; gap: 10px; max-width: 320px; }
 @media (max-width: 620px) { button.theme-btn .lbl { display: none; } button.theme-btn { padding: 6px 9px; } }
 .range { display: inline-flex; align-items: center; gap: 8px; margin-left: 10px; }
 .range label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
@@ -712,19 +718,23 @@ footer { border-top: 1px solid var(--rule); padding-top: 16px; font-size: 12.5px
 <div class="bar">
   <div class="bar-inner">
     <a class="bar-mark" href="#top" aria-label="Vos Sports — top of page"><svg viewBox="0 0 336.4 125" aria-hidden="true"><use href="#vos-vs"/></svg></a>
-    <a class="page-link console-link" id="console-link" hidden href="#" target="_blank" rel="noopener">Trainer console <span aria-hidden="true">↗</span></a>
+    <a class="page-link console-link" id="console-link" hidden href="#" target="_blank" rel="noopener"><span data-tr="Trainer console">Trainer console</span> <span aria-hidden="true">↗</span></a>
     <div class="seg-group">
-      <span class="seg-label">Client</span>
+      <span class="seg-label" data-tr="Client">Client</span>
       <div class="seg" id="roster-seg" role="group" aria-label="Client"></div>
     </div>
     <div class="seg-group" id="period-group">
-      <span class="seg-label">Period</span>
+      <span class="seg-label" data-tr="Period">Period</span>
       <div class="seg" id="period-seg" role="group" aria-label="Period"></div>
       <div class="range" id="range-fields" hidden>
-        <label><span>From</span><input type="date" id="range-from"></label>
-        <label><span>To</span><input type="date" id="range-to"></label>
+        <label><span data-tr="From">From</span><input type="date" id="range-from"></label>
+        <label><span data-tr="To">To</span><input type="date" id="range-to"></label>
       </div>
     </div>
+    <button class="theme-btn" id="profile-btn" type="button" aria-haspopup="dialog">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="5.4" r="2.9" stroke="currentColor" stroke-width="1.5"/><path d="M2.4 14c.5-2.8 2.8-4.3 5.6-4.3s5.1 1.5 5.6 4.3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span class="lbl" id="profile-label">Profile</span>
+    </button>
     <button class="theme-btn" id="theme-btn" type="button" aria-live="polite">
       <span id="theme-icon"></span><span class="lbl" id="theme-label">Auto</span>
     </button>
@@ -743,43 +753,77 @@ footer { border-top: 1px solid var(--rule); padding-top: 16px; font-size: 12.5px
     <svg class="lock-mark" viewBox="0 0 336.4 125" aria-hidden="true"><use href="#vos-vs"/></svg>
 
     <div id="lock-step-pass">
-      <label for="lock-pass">Password</label>
+      <label for="lock-pass" data-tr="Password">Password</label>
       <input id="lock-pass" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false">
-      <label class="lock-keep"><input id="lock-keep" type="checkbox" checked> Stay signed in on this device</label>
-      <button class="act primary" id="lock-go" type="button">Open</button>
+      <label class="lock-keep"><input id="lock-keep" type="checkbox" checked> <span data-tr="Stay signed in on this device">Stay signed in on this device</span></label>
+      <button class="act primary" id="lock-go" type="button" data-tr="Open">Open</button>
       <span class="lock-links">
-        <button class="lock-link" id="lock-first" type="button">First time here? Enter your setup code</button>
-        <button class="lock-link" id="lock-forgot" type="button">Forgotten your password?</button>
+        <button class="lock-link" id="lock-first" type="button" data-tr="First time here? Enter your setup code">First time here? Enter your setup code</button>
+        <button class="lock-link" id="lock-forgot" type="button" data-tr="Forgotten your password?">Forgotten your password?</button>
       </span>
     </div>
 
     <div id="lock-step-code" hidden>
-      <label for="lock-code">Setup code</label>
+      <label for="lock-code" data-tr="Setup code">Setup code</label>
       <input id="lock-code" type="text" inputmode="text" autocomplete="one-time-code" autocapitalize="characters" spellcheck="false" placeholder="XXXX-XXXX">   <!-- no maxlength: a pasted message must arrive whole, the input handler trims it -->
-      <p class="lock-hint" id="lock-code-hint">The code your trainer sent you. You can paste the whole message — the code is picked out of it.</p>
-      <button class="act primary" id="lock-code-go" type="button" disabled>Continue</button>
-      <button class="lock-link" id="lock-back" type="button">I already have a password</button>
+      <p class="lock-hint" id="lock-code-hint" data-tr="The code your trainer sent you. You can paste the whole message — the code is picked out of it.">The code your trainer sent you. You can paste the whole message — the code is picked out of it.</p>
+      <button class="act primary" id="lock-code-go" type="button" disabled data-tr="Continue">Continue</button>
+      <button class="lock-link" id="lock-back" type="button" data-tr="I already have a password">I already have a password</button>
     </div>
 
     <div id="lock-step-choose" hidden>
       <p class="lock-hello" id="lock-hello"></p>
-      <label for="lock-new1">Choose your password</label>
+      <label for="lock-new1" data-tr="Choose your password">Choose your password</label>
       <input id="lock-new1" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false">
       <div class="lock-meter" id="lock-meter" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-      <p class="lock-hint">At least 8 characters. Only this phone keeps it — your trainer never sees it.</p>
-      <label for="lock-new2">Once more</label>
+      <p class="lock-hint" data-tr="At least 8 characters. Only this phone keeps it — your trainer never sees it.">At least 8 characters. Only this phone keeps it — your trainer never sees it.</p>
+      <label for="lock-new2" data-tr="Once more">Once more</label>
       <input id="lock-new2" type="password" autocomplete="new-password" autocapitalize="off" spellcheck="false">
-      <label class="lock-keep"><input id="lock-show" type="checkbox"> Show what I type</label>
-      <label class="lock-keep"><input id="lock-keep2" type="checkbox" checked> Stay signed in on this device</label>
-      <button class="act primary" id="lock-choose-go" type="button">Save and open</button>
+      <label class="lock-keep"><input id="lock-show" type="checkbox"> <span data-tr="Show what I type">Show what I type</span></label>
+      <label class="lock-keep"><input id="lock-keep2" type="checkbox" checked> <span data-tr="Stay signed in on this device">Stay signed in on this device</span></label>
+      <button class="act primary" id="lock-choose-go" type="button" data-tr="Save and open">Save and open</button>
     </div>
 
     <div id="lock-msg" class="lock-msg" role="status" aria-live="polite"></div>
-    <p class="lock-note">The log is encrypted inside this page. Without your password it is unreadable, here and anywhere the file is hosted. Your password stays on this device.</p>
+    <p class="lock-note" data-tr="The log is encrypted inside this page. Without your password it is unreadable, here and anywhere the file is hosted. Your password stays on this device.">The log is encrypted inside this page. Without your password it is unreadable, here and anywhere the file is hosted. Your password stays on this device.</p>
   </div>
 </div>
 <div id="tip" role="status" aria-live="polite"></div>
 <div id="toast" role="status" aria-live="polite"></div>
+
+<dialog class="sheet" id="profile-dlg" aria-labelledby="profile-title">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <h2 id="profile-title" data-tr="Your account">Your account</h2>
+      <p id="pf-who"></p>
+    </div>
+    <div class="sheet-body">
+      <div class="pf-block">
+        <h3 data-tr="Language">Language</h3>
+        <span class="seg" id="lang-seg" role="group" aria-label="Language">
+          <button type="button" data-lang="nl" aria-pressed="false">Nederlands</button>
+          <button type="button" data-lang="en" aria-pressed="false">English</button>
+        </span>
+      </div>
+      <div class="pf-block" id="pf-pw" hidden>
+        <h3 data-tr="Change password">Change password</h3>
+        <div class="pf-fields">
+          <div class="field"><label for="pf-old" data-tr="Current password">Current password</label><input type="password" id="pf-old" autocomplete="current-password"></div>
+          <div class="field"><label for="pf-new1" data-tr="New password">New password</label><input type="password" id="pf-new1" autocomplete="new-password"></div>
+          <div class="field"><label for="pf-new2" data-tr="Once more">Once more</label><input type="password" id="pf-new2" autocomplete="new-password"></div>
+          <div id="pf-out"></div>
+        </div>
+        <p class="hint" data-tr="The new password works on this device. Your trainer never sees it.">The new password works on this device. Your trainer never sees it.</p>
+      </div>
+    </div>
+    <div class="sheet-foot">
+      <span class="spacer"></span>
+      <button class="act danger" id="pf-logout" type="button" hidden data-tr="Log out">Log out</button>
+      <button class="act" id="pf-save" type="button" hidden data-tr="Save password">Save password</button>
+      <button class="act primary" id="pf-close" type="button" data-tr="Close">Close</button>
+    </div>
+  </div>
+</dialog>
 
 <dialog class="sheet" id="import-dlg" aria-labelledby="import-title">
   <div class="sheet-in">
@@ -971,7 +1015,7 @@ const APP_URL = "https://diondevos.github.io/Vos-sports/";
    below with an encrypted blob and the page asks for a passphrase first. */
 let ROSTER_SEALED = null;
 let ROSTER = [];
-ROSTER_SEALED = {"blobs": [{"iv": "Wx94QuT0yLzIKJKa4Z6w9w==", "ct": "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", "tag": "c8mG6Mrsxs897v9rddCfNypTaNSn8pYFVTaoFVHRaWs=", "setup": {"salt": "2wOJo8yCVIlATOuPIrTINQ==", "iv": "krbT1CsjVTSMfOcFaanq6Q==", "ct": "slzJKcMwImpnIX7XwKlB2/o9P1cpeXlfp6b+AfqYroRr8hUDSZTnPgHnItXeoamWZpJSc04tZLckhDfOC2g4815fGBtaDD4Hbl26/sKu9WQw7f33EUI0RwQ/ZV6o8pmL", "tag": "A4vPywH+hODH6jDqrW9XaNVwFY8PKEyuDm2Uc0HL858="}}, {"iv": "+yXeSAkFcdsJapjY5GwJWA==", "ct": "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", "tag": "Ob+vUU2oHCAoX+sVZdQE0uNLmmGtAcivlvaFeQiDkfs=", "setup": {"salt": "PeiJ4Hrv8DTfSAbKYWfNrQ==", "iv": "naMbQvObrWVhHPE82/86fg==", "ct": "xYN33DcqRlpRnJL2QAnxsAjUMf3mGd/90laghVPyO4w+jqZOOkpPY1JzsTfEFUR6AJAhCzzdCY0amvPvFC7GgmFd4SkzjmHRfWifQBHsnFMqEknZ7O+43tqYRdLWC8o4", "tag": "fQY5qm1/XNMSE1RuAhMCfMDWmpfM/qvpi9CzHpwEAK8="}}, {"iv": "PKKs0XhvQ6Y6Nu9cXDP/gQ==", "ct": "q3WlHs5MU+jEyH+YttcGLJJt4BTO8ckYXY6zQNkLF14TYXI7ycfJbTAy221JBac1A1hqFnd08RqiMdmFR8+qHdJ3RZGBdBEOhea0aqLFGAb/yqlSCE+EzXo4S6XyNHIr04Ij9LRi7+lniPUPj8f1sBF8hXu4A4Z5y4T8WlRmJugEtE8owvsfwN6AyUmS4XZV91IVOYZx68vQSkV+/5HJe6gZEIFZCG9YeUyjWDIP9n6tciXAXARlBghsw8pai+/ebFTHPjfg1lOjMFyB2cvBwq1tPcd6npKPpx2+edQFBZWSUIsyfoyd6nvezSqaobqOSF1xDt1Uz7k0+F0mS9DWoAESdVbudZjngkd48VSx5HXBTBTwA5qLO07KoWoX28RcbMuKDh+ZuFc5A/y5phkzwK1huBieTNq6oVlM3orXE5YbmfqQXJst+kOEVY04JPxFy56YwAeTCjfC9r080QmC8w72bJa8Vmyf89r+xpnXHsK+lPNFN0fatmCCYqSw5k7NJ3AtRZcfXpjNeWsIyJUDH6ZqlLzwEuYEar8EPTfmbywIsTGs4m0BPArW1xqIHGSapSS4zTrSs7/c1zwUzRRlbn0/kOYMrBeUSGr4/8bknIfIVSZqJeR6/ZBhngkxNKskqJSdFuQRAqk3QYM00G2vRhJFZBK6GiGEmPzt66KeurMXy634OlK+h77yLPFcF2PYITjdlVLveHh8z3JkXns7myZ2S7r6s8GmjM9arhptszxtuJmB3683jZUnx7n1pmE+JFV0y2BsisO7nhcs2oD2J36YsMRO8rg/iZ4DSp12+90bVqvWJNL038LNCRThHZVs1kb9IYgEtgl1YPGLhuy4JMTi8Zo6amwqu95Q6aCQ6nqo6izVpVRldbUzIEd/Hl/bvIEHaB3lvShWMTHb47AeL8OykteJhfxvhqcrRoP7cZEnVKNUBnEfuQW6E7q7EzFEa0GSSP79OhMEsjT02zFziqRXr3kNW/NkEtgWPlJWuuFQ/mK7r33qy+gtGKNleh067Yb50O7dT9dddiHOIBVlbGywNli+DXE+bIt3JWWp4lIAszM8JdTDjzLJmS8aakjgnkYUdnrnv2FzLxLig3AOViHLQJeRe5xokOjIeye9wrzuSCB9Qakc3hXML5SqlAQyaaHehWZONiM1O4jzDZSwHw2WqiyCwyQcnuZWtimB06Cw/7fsg9xt+VJjhopi/47TU1HtqI+8WwKcmHfYjdkfqN0eGs7DR+8TuOJ4KReCaCuSKf2em7MTAI1ctpk14zSYGSJLQom3mK+F8Wa6PstlRyAFiJecdr2aT716lL8Hvx+vDSK1336sCZcv7RpKKg5Jrd+DlKbVP87kEv4/7HMDexYQb+qjLbezD7G2jQ6pJzY8ZBpROEZwwsmGplPDozDg", "tag": "EBaKKDkdI3MMC54nV7ibNmOrrSrCOVrHMcW7wnHWRt0=", "setup": {"ct": "cfyZkuEa2e0A44AcHIyAMHTnI42TPNd4IsW08TXeesN66Ln9Bkx1IBM+WwHwT3svDzM8iIWps5BOUDuQLgWia8FEEfIQOVRy3Fvdnh9k2DMwc9qsnqn61uwnMN+1o7Jh", "iv": "up/TQtX5+9TjwMa/JgCPlw==", "salt": "riIqwtq6FT5TwjnsDEdifA==", "tag": "0grLOY36sjzvHkIT3K7PBprP3dezjr2M7baRXVGmixw="}}, {"iv": "6FjrmI7yBYT89GO6rSS0Ew==", "ct": "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", "tag": "wHF44KdHmLfoMVIVUtbEIVW/6WbUkhprhjWXNIq7R9E=", "salt": "ADRUMpLZjbbFySk5bh2aWA=="}]};
+ROSTER_SEALED = {"blobs": [{"iv": "khq6FGX3wmv3c6XW8WjR/Q==", "ct": "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", "tag": "7mAOeF7ve7l7m5kGCdC5t2Gm+DitnmnluA0bQdB2yh4=", "setup": {"salt": "PeiJ4Hrv8DTfSAbKYWfNrQ==", "iv": "naMbQvObrWVhHPE82/86fg==", "ct": "xYN33DcqRlpRnJL2QAnxsAjUMf3mGd/90laghVPyO4w+jqZOOkpPY1JzsTfEFUR6AJAhCzzdCY0amvPvFC7GgmFd4SkzjmHRfWifQBHsnFMqEknZ7O+43tqYRdLWC8o4", "tag": "fQY5qm1/XNMSE1RuAhMCfMDWmpfM/qvpi9CzHpwEAK8="}}, {"iv": "6KtJeVUxrbb3z+ck9Kxc+A==", "ct": "yKIud0o+7G20JQKevqSyGMCBfGk9p+I0e2am9d3bz1zCyYY+jhoZJeFt+8pexUAQk6l8zY5bmI4T/WLLjbVmNEiTZ+Lt2EirwWie2d+4/3phbsd2TxgzDecJqj0F8KIg92cZbTNtTr/C8N8xZc8guhUBwlhANyShybcFHh8bhtqoQxnV1SHEQKdCekJojCBBX8KAqsjwi5pET4EzPElyG8ymILazykRXa9F/97DPPcKfSa0NK3cBZvE9dgdjOsLD1k8S+rlvJBb8FQMHQcyuKHEJRjObyaLXlneFOA4uJLI8T4TidKQU96OpmLO6Pib1HU/aWgDgV9TkN6TYO0cOuirQJTOEhqwifPyAOkld0wpk75KYzVPIrIJpkc4r0c2SaSpKbHEEOYAIq2kFTJyxjROaqO1HNA71m3yof/cdEd5e1vw4jMCwQx3hDPU4HNYCz9QChJrC5ogedWZvg3SQZDBzkVww1R6XZlFTh3Y7rvNA9JaHi+JQTeBWqVMckoFgjJ1YMyoJqVrq/GNJs8//DfDCtVnlYbJ7rYnGGa5iUydDgwQoNt4iQqcctJZNMXfsBLVuus/gPOIUvyKsi5hrngPnnpKkBZhTkbzZViiFiaEzRqYCHr218YFvzyZKR7gE0sVwPsPQU9lsl9p8NUS94LbnQ7+BX/lRTU21yxwSuXrRLvQPkem4TCfiqzh8P9IrCEBHrtaoCFVpAJM9VXYHCBpia+9CNcNr+aDnw8JfD8CSD2Ycp6kn34xQ4DFp6ZmNmXY9gCSIZN+/oH0GL2nmQT1Ggl5iLVUlk0wCu9V826PNm6Fxo2H3B0bKVgcD/D3qw1xKuBCGmc/g1RcXNIIMBVVDspzkUabj2LUSfRDcRtd+63QfHkkH39GulhPzwsSIDrh8Kt1HbRMJM3QJ3FIAi3wGhGZHtnKqEq1hgvqPA+44NbG+F1xyTpfVzURISLn+mJa4hycYJfrEyaftQRN1qTBFqn1V4Rc8QiKOHCa8OW55Y7J2oRgL9njwbd7IMnO91S8/lL41kWnbhtKnT8bbUVK29MwezCMNRU9t6uQWFsP2EcAEYhfP/32LZO+HHgcH+Jcz8u2jhas9eFML8tVu5UMGLFHoVdn9rIueF7R5ku1CBN0zwoVFaLO/McDGcphU72GkoyvEbT76wz5RptWXZ4scEl4Plmb/slFSdrzvAcEpN+CvDzE4eglmUJdmawyEEUVixM05fPWVFREFZfE5ZcFGHwtviIrjau+VxVlppe+bfQyL7oksNnc91P+ec98w8w8KhHiSA8A5993Bm8/9b//1v8DqR+nNluy6f4I5SwfaG04WUNMV+8H/M1Tdly1WpH3vHYJSSnGUKdpRRverBCBALmhFL3+abFTaTnYvCoTpu1L/bdLPgq0DP04Ybyb8", "tag": "RfajBJpfxYRLXP2k1VWnL7U9uaBe11bzqiZLk1EszMs=", "setup": {"ct": "cfyZkuEa2e0A44AcHIyAMHTnI42TPNd4IsW08TXeesN66Ln9Bkx1IBM+WwHwT3svDzM8iIWps5BOUDuQLgWia8FEEfIQOVRy3Fvdnh9k2DMwc9qsnqn61uwnMN+1o7Jh", "iv": "up/TQtX5+9TjwMa/JgCPlw==", "salt": "riIqwtq6FT5TwjnsDEdifA==", "tag": "0grLOY36sjzvHkIT3K7PBprP3dezjr2M7baRXVGmixw="}}, {"iv": "Ft2TBks3qC4gb5DRxhqIyw==", "ct": "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", "tag": "eRMauUxsvw0njqI+As71BHlYL9Jmbo7RnVHaABQXZQI=", "salt": "ADRUMpLZjbbFySk5bh2aWA=="}, {"iv": "xe7Luz8YQELoWIhLuY3dog==", "ct": "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", "tag": "kEM+7KjFfj6XM/rQTgBC8wBi7tg8RNLgCb5O/92hr9M=", "setup": {"salt": "2wOJo8yCVIlATOuPIrTINQ==", "iv": "krbT1CsjVTSMfOcFaanq6Q==", "ct": "slzJKcMwImpnIX7XwKlB2/o9P1cpeXlfp6b+AfqYroRr8hUDSZTnPgHnItXeoamWZpJSc04tZLckhDfOC2g4815fGBtaDD4Hbl26/sKu9WQw7f33EUI0RwQ/ZV6o8pmL", "tag": "A4vPywH+hODH6jDqrW9XaNVwFY8PKEyuDm2Uc0HL858="}}]};
 
 /* A set is [weight, reps] or [weight, reps, "note"]; a session may carry a
    `note` string. Notes on imported sessions live in NOTES (clientId -> date ->
@@ -1033,15 +1077,228 @@ function describeSession(exercises) {
     .join(" · ");
 }
 
+/* ── two languages ─────────────────────────────────────────────────
+   The clients read Dutch; the trainer works in English. The key *is* the
+   English sentence, with {placeholders} where a number or a name goes, so
+   the source stays readable and anything not yet translated falls back to
+   English rather than to a key name. The choice is remembered per device.
+   `tr`, not `t` — `t` is already a local in the date helpers below. */
+const NL = {
+"Client": "Cliënt",
+"Period": "Periode",
+"From": "Van",
+"To": "Tot",
+"Trainer console": "Trainersconsole",
+"All clients": "Alle cliënten",
+"4 weeks": "4 weken",
+"3 months": "3 maanden",
+"All": "Alles",
+"Custom…": "Aangepast…",
+"Profile": "Profiel",
+"Your account": "Jouw account",
+"Your account — language, password, log out": "Jouw account — taal, wachtwoord, uitloggen",
+"Language": "Taal",
+"Change password": "Wachtwoord wijzigen",
+"Current password": "Huidig wachtwoord",
+"New password": "Nieuw wachtwoord",
+"Save password": "Wachtwoord opslaan",
+"Log out": "Uitloggen",
+"Close": "Sluiten",
+"Trainer": "Trainer",
+"Signed in as {name}.": "Ingelogd als {name}.",
+"The language you read this page in.": "De taal waarin je deze pagina leest.",
+"That is not your current password.": "Dat is niet je huidige wachtwoord.",
+"The new password works on this device. Your trainer never sees it.": "Het nieuwe wachtwoord geldt op dit apparaat. Je trainer ziet het nooit.",
+"Sessions": "Trainingen",
+"whole record": "hele logboek",
+"in period": "in deze periode",
+"Total lifted": "Totaal getild",
+"Reps done · across {n} sets": "Reps gedaan · over {n} sets",
+"days": "dagen",
+"Average rest between sessions": "Gemiddelde rust tussen trainingen",
+"Last personal record · {n} days ago": "Laatste persoonlijk record · {n} dagen geleden",
+"No personal record yet": "Nog geen persoonlijk record",
+"All {n} sessions on record": "Alle {n} trainingen in het logboek",
+"{a} of {b} sessions · {from} to {to}": "{a} van {b} trainingen · {from} tot {to}",
+"{a} of {b} sessions · {span} up to {date}": "{a} van {b} trainingen · {span} tot {date}",
+"last 4 weeks": "laatste 4 weken",
+"last 3 months": "laatste 3 maanden",
+"The coach's read": "Wat de coach ziet",
+"{n} thing the log is saying": "{n} ding dat het logboek zegt",
+"{n} things the log is saying": "{n} dingen die het logboek zegt",
+"Top set, session by session": "Zwaarste set, training voor training",
+"Chart and table hold the same sets · ring and PR mark a heaviest-ever": "Grafiek en tabel tonen dezelfde sets · ring en PR markeren een zwaarste ooit",
+"Volume per session": "Volume per training",
+"Kilos moved per session — weight × reps, stacked by exercise": "Kilo's per training — gewicht × reps, gestapeld per oefening",
+"Muscle group balance": "Balans per spiergroep",
+"Share of the kilos lifted in the period, by the muscles each exercise works": "Aandeel van de getilde kilo's in deze periode, per spier die de oefening traint",
+"Where the work landed": "Waar het werk landde",
+"The same six groups on the body — drag to turn it, point at a muscle for its numbers": "Dezelfde zes groepen op het lichaam — sleep om te draaien, wijs een spier aan voor de cijfers",
+"Rhythm": "Ritme",
+"Days of rest before each session": "Rustdagen vóór elke training",
+"Session log": "Logboek",
+"Every set as recorded · {n} sets": "Elke set zoals genoteerd · {n} sets",
+"Date": "Datum",
+"Exercise": "Oefening",
+"Set {n}": "Set {n}",
+"Top set": "Zwaarste set",
+"Reps": "Reps",
+"Total reps": "Totaal reps",
+"Volume": "Volume",
+"Rest": "Rust",
+"Total": "Totaal",
+"{n} sets": "{n} sets",
+"{n} days off": "{n} dagen rust",
+"Last {n}": "Laatste {n}",
+"Heaviest set per session · ×n is the reps": "Zwaarste set per training · ×n zijn de reps",
+"Every set · weight × reps · reps counted per session, totalled at the foot": "Elke set · gewicht × reps · reps per training, totaal onderaan",
+"{s} sessions · {r} reps · {v} kg moved · heaviest {h} kg": "{s} trainingen · {r} reps · {v} kg verzet · zwaarste {h} kg",
+"{d} kg over the period": "{d} kg over de periode",
+"What {name} is training for": "Waar {name} voor traint",
+"No goal set yet": "Nog geen doel",
+"No goal on record for {name}.": "Nog geen doel vastgelegd voor {name}.",
+"Tell Claude the aim, the targets and the sessions a week, and progress shows here.": "Geef Claude het doel, de targets en het aantal trainingen per week door, dan staat de voortgang hier.",
+"Goal": "Doel",
+"Reached": "Behaald",
+"In progress": "Onderweg",
+"Behind": "Achter",
+"No data": "Geen data",
+"Not tracked": "Niet gemeten",
+"{kg} kg to go": "nog {kg} kg",
+"Sessions a week": "Trainingen per week",
+"{n} a week over the last 4 weeks": "{n} per week over de laatste 4 weken",
+"{n} across the whole record": "{n} over het hele logboek",
+"{n} sessions a week": "{n} trainingen per week",
+"Fat mass · measured": "Vetmassa · gemeten",
+"target {v}%": "doel {v}%",
+"Nothing recorded yet": "Nog niets gemeten",
+"the target is {v}%": "het doel is {v}%",
+"Add measurement": "Meting toevoegen",
+"{n} earlier": "{n} eerder",
+"No added load": "Geen extra gewicht",
+"All {n} exercises": "Alle {n} oefeningen",
+"Not one lift has gone up across {n} months — {range}. Each peaks at exactly the same weight every month ({peaks}). The block is being repeated, not progressed.": "Geen enkele lift is omhooggegaan in {n} maanden — {range}. Elke oefening piekt elke maand op precies hetzelfde gewicht ({peaks}). Het blok wordt herhaald, niet opgebouwd.",
+"Tops out at {kg} kg in every one of {n} months on record — {range}. The block is being repeated, not progressed.": "Blijft steken op {kg} kg in elk van de {n} maanden in het logboek — {range}. Het blok wordt herhaald, niet opgebouwd.",
+"Blocks reset": "Blokken resetten",
+"Every exercise": "Elke oefening",
+"Each block opens on exactly the weight the last one opened on ({weights}). Gains made inside a block are given back before the next one starts.": "Elk blok begint op precies het gewicht waarop het vorige begon ({weights}). Winst binnen een blok wordt ingeleverd voordat het volgende start.",
+"Time off between blocks": "Pauzes tussen de blokken",
+"One break of two weeks or more, the longest {d} days.": "Eén pauze van twee weken of langer, de langste {d} dagen.",
+"{n} breaks of two weeks or more, the longest {d} days.": "{n} pauzes van twee weken of langer, de langste {d} dagen.",
+"Three sessions in five days, then nothing for the rest of the month — that gap is the most likely reason load resets.": "Drie trainingen in vijf dagen en daarna niets meer die maand — dat gat is de waarschijnlijkste reden dat het gewicht terugvalt.",
+"Jump too big": "Te grote stap",
+"On {date} the load went {a} → {b} kg and total reps fell {ra} → {rb}. A smaller step, or one more session at {a} kg, would hold the volume.": "Op {date} ging het gewicht van {a} → {b} kg en vielen de reps terug van {ra} → {rb}. Een kleinere stap, of nog een training op {a} kg, houdt het volume overeind.",
+"Last PR": "Laatste PR",
+"Nothing new since {date}": "Niets nieuws sinds {date}",
+"{n} days without a heaviest-ever set. Every session since has repeated ground already covered.": "{n} dagen zonder een zwaarste set ooit. Elke training sindsdien herhaalt bekend terrein.",
+"Still climbing": "Nog in de lift",
+"{n} personal record this period": "{n} persoonlijk record deze periode",
+"{n} personal records this period": "{n} persoonlijke records deze periode",
+"The most recent was {when}, on {date}. Load is still going somewhere.": "De laatste was {when}, op {date}. Het gewicht gaat nog ergens heen.",
+"the last session": "de vorige training",
+"1 day ago": "1 dag geleden",
+"{n} days ago": "{n} dagen geleden",
+"Consistent": "Constant",
+"Showing up": "Komt opdagen",
+"{rate} sessions a week across {weeks} weeks, longest break {d} days. This is the part most logs fall down on.": "{rate} trainingen per week over {weeks} weken, langste pauze {d} dagen. Hier gaan de meeste logboeken juist onderuit.",
+"Stalled now": "Staat nu stil",
+"Three sessions in a row at {kg} kg, most recently {date}. Time to change something: smaller jumps, an extra set, or a light week.": "Drie trainingen op rij op {kg} kg, laatst op {date}. Tijd om iets te veranderen: kleinere stappen, een set erbij of een lichte week.",
+"Working": "Werkt",
+"{lo} → {hi} kg, up {pct}%, over {n} sessions since {date}.": "{lo} → {hi} kg, {pct}% omhoog, over {n} trainingen sinds {date}.",
+"That climb happens inside each block — the programming is fine, it is the continuity that is not.": "Die stijging gebeurt binnen elk blok — de programmering klopt, de continuïteit niet.",
+"The best rate of gain on the board.": "De sterkste groei van allemaal.",
+"Each set counts in full for its primary muscle, half for the secondary, a quarter for the tertiary — from the exercise reference. Pick a group to light it up on the body below.": "Elke set telt volledig voor de primaire spier, half voor de secundaire en een kwart voor de tertiaire — volgens het oefeningenoverzicht. Kies een groep om die op het lichaam hieronder op te lichten.",
+"No exercise in this period could be placed on a muscle, so there is nothing to balance yet.": "Geen enkele oefening in deze periode kon aan een spier gekoppeld worden, dus er valt nog niets te verdelen.",
+"Muscles": "Spieren",
+"off leaves the skeleton": "uit laat het skelet zien",
+"Loading the anatomy…": "Anatomie laden…",
+"Drag to turn the figure. Point at a muscle to see its share of the kilos and its reps — or pick a group above.": "Sleep om de figuur te draaien. Wijs een spier aan voor het aandeel in de kilo's en de reps — of kies hierboven een groep.",
+"no work": "geen werk",
+"most this period": "meeste deze periode",
+"most — {g} {pct}%": "meeste — {g} {pct}%",
+"of the kilos": "van de kilo's",
+"reps": "reps",
+"{n} muscle lit on the body": "{n} spier opgelicht op het lichaam",
+"{n} muscles lit on the body": "{n} spieren opgelicht op het lichaam",
+"tap again for the layer under it": "tik nog eens voor de laag eronder",
+"{muscle} alone: {kg} kg · {reps} reps": "{muscle} alleen: {kg} kg · {reps} reps",
+"Bone": "Bot",
+"left": "links",
+"right": "rechts",
+"Bones carry no numbers — the colour on this page is the work the muscles did.": "Botten dragen geen cijfers — de kleur op deze pagina is het werk van de spieren.",
+"Anatomy model:": "Anatomiemodel:",
+"The figure could not be drawn here.": "De figuur kon hier niet getekend worden.",
+"The figure needs a connection the first time it is opened. Everything else on this page works without one.": "De figuur heeft de eerste keer internet nodig. De rest van deze pagina werkt ook zonder.",
+"Colour is the group's share of the kilos lifted in this period, palest for none through to the deepest red for the biggest share. Reps carry the same weighting as the kilos — a set counts in full for its primary muscle, half for the second, a quarter for the third — so the six groups together come to more than the {n} reps actually done. Muscles no exercise in the log trains — neck, face, breathing — stay pale, and bone stays bone.": "De kleur is het aandeel van de groep in de kilo's van deze periode: het bleekst bij niets, het diepste rood bij het grootste aandeel. Reps krijgen dezelfde weging als de kilo's — een set telt volledig voor de primaire spier, half voor de tweede en een kwart voor de derde — dus de zes groepen samen komen hoger uit dan de {n} reps die echt gedaan zijn. Spieren die geen enkele oefening in het logboek traint — nek, gezicht, ademhaling — blijven bleek, en bot blijft bot.",
+"Legs": "Benen",
+"Chest": "Borst",
+"Back": "Rug",
+"Shoulders": "Schouders",
+"Arms": "Armen",
+"Core": "Core",
+"Password": "Wachtwoord",
+"Open": "Openen",
+"Stay signed in on this device": "Ingelogd blijven op dit apparaat",
+"First time here? Enter your setup code": "Eerste keer hier? Vul je setupcode in",
+"Forgotten your password?": "Wachtwoord vergeten?",
+"Setup code": "Setupcode",
+"Continue": "Verder",
+"I already have a password": "Ik heb al een wachtwoord",
+"The code your trainer sent you. You can paste the whole message — the code is picked out of it.": "De code die je trainer je stuurde. Je mag het hele bericht plakken — de code wordt eruit gehaald.",
+"Choose your password": "Kies je wachtwoord",
+"At least 8 characters. Only this phone keeps it — your trainer never sees it.": "Minstens 8 tekens. Alleen deze telefoon bewaart het — je trainer ziet het nooit.",
+"Once more": "Nog een keer",
+"Show what I type": "Toon wat ik typ",
+"Save and open": "Opslaan en openen",
+"The log is encrypted inside this page. Without your password it is unreadable, here and anywhere the file is hosted. Your password stays on this device.": "Het logboek is versleuteld in deze pagina. Zonder je wachtwoord is het onleesbaar, hier en overal waar het bestand staat. Je wachtwoord blijft op dit apparaat.",
+"Checking…": "Controleren…",
+"That password doesn't open this log.": "Dit wachtwoord opent dit logboek niet.",
+"Still not right. Use “Forgotten your password?” below and your setup code.": "Nog steeds niet goed. Gebruik “Wachtwoord vergeten?” hieronder, met je setupcode.",
+"That setup code isn't right. Check it with your trainer — a new one can always be sent.": "Die setupcode klopt niet. Vraag het je trainer — er kan altijd een nieuwe gestuurd worden.",
+"Use at least 8 characters.": "Gebruik minstens 8 tekens.",
+"The two passwords don't match.": "De twee wachtwoorden komen niet overeen.",
+"Saving…": "Opslaan…",
+"Something went wrong saving the password. Try again.": "Er ging iets mis bij het opslaan. Probeer het nog eens.",
+"New password saved on this device.": "Nieuw wachtwoord opgeslagen op dit apparaat.",
+"Password saved on this device.": "Wachtwoord opgeslagen op dit apparaat.",
+"Enter your setup code and choose a new password.": "Vul je setupcode in en kies een nieuw wachtwoord.",
+"Welcome back, {first}. Choose a new password — the old one stops working.": "Welkom terug, {first}. Kies een nieuw wachtwoord — het oude werkt dan niet meer.",
+"Choose a new password. The old one stops working.": "Kies een nieuw wachtwoord. Het oude werkt dan niet meer.",
+"Hello {name}. This is your own page — choose a password for it.": "Hallo {name}. Dit is jouw eigen pagina — kies er een wachtwoord voor.",
+"Choose a password for your page.": "Kies een wachtwoord voor je pagina.",
+"Every figure on this page is computed from the logged sets — nothing is entered by hand. Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any before it.": "Elk cijfer op deze pagina is berekend uit de genoteerde sets — er wordt niets met de hand ingevuld. Volume is gewicht × reps; het geschatte 1RM gebruikt de formule van Epley. Een persoonlijk record is een zwaardere topset dan elke eerdere.",
+"{name} — no sessions on record yet.": "{name} — nog geen trainingen vastgelegd.",
+"{name} is sample data.": "{name} is voorbeelddata.",
+"The {n} sessions this page ships with were generated as a worked example of a programme that is progressing, to sit beside a real one that is not — no such client exists.": "De {n} trainingen die standaard in deze pagina zitten zijn gemaakt als uitgewerkt voorbeeld van een programma dat wél vooruitgaat, naast een echt programma dat dat niet doet — deze cliënt bestaat niet.",
+"Source:": "Bron:",
+"{n} sessions between {from} and {to}, {sets} sets.": "{n} trainingen tussen {from} en {to}, {sets} sets.",
+"Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any logged before it.": "Volume is gewicht × reps; het geschatte 1RM gebruikt de formule van Epley. Een persoonlijk record is een zwaardere topset dan elke eerder genoteerde.",
+"This page is {name}'s own and is updated by the trainer.": "Deze pagina is van {name} en wordt bijgehouden door de trainer.",
+"This is a read-only mirror of the console; sessions are logged there.": "Dit is een alleen-lezen spiegel van de console; trainingen worden daar vastgelegd.",
+"{a} through {b}": "{a} tot en met {b}"
+};
+let LANG = (() => {
+  try { const v = localStorage.getItem("vos-lang"); if (v === "nl" || v === "en") return v; } catch (e) {}
+  return APP_BUILD ? "nl" : "en";     /* the app is where clients read; the console is the trainer's desk */
+})();
+function tr(s, p) {
+  let out = (LANG === "nl" && NL[s]) ? NL[s] : s;
+  if (p) Object.keys(p).forEach(k => { out = out.split("{" + k + "}").join(p[k]); });
+  return out;
+}
+const locale = () => (LANG === "nl" ? "nl-NL" : "en-GB");
+
 /* ── small helpers ─────────────────────────────────────────────────── */
-const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS_EN = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+const MONTHS_NL = ["jan","feb","mrt","apr","mei","jun","jul","aug","sep","okt","nov","dec"];
+const monthNames = () => (LANG === "nl" ? MONTHS_NL : MONTHS_EN);
 const d = (s) => new Date(s + "T00:00:00");
-const fmtDay = (s) => { const t = d(s); return t.getDate() + " " + MONTHS[t.getMonth()]; };
-const fmtFull = (s) => { const t = d(s); return t.getDate() + " " + MONTHS[t.getMonth()] + " " + t.getFullYear(); };
+const fmtDay = (s) => { const t = d(s); return t.getDate() + " " + monthNames()[t.getMonth()]; };
+const fmtFull = (s) => { const t = d(s); return t.getDate() + " " + monthNames()[t.getMonth()] + " " + t.getFullYear(); };
 const daysBetween = (a, b) => Math.round((d(b) - d(a)) / 86400000);
 /* two decimals, so 1.25 kg micro-plates survive: 63.75 must not read 63.8 */
-const kg = (n) => (Math.round(n * 100) / 100).toLocaleString("en-GB");
-const kgFull = (n) => Math.round(n).toLocaleString("en-GB");        /* 58,700 */
+const kg = (n) => (Math.round(n * 100) / 100).toLocaleString(locale());
+const kgFull = (n) => Math.round(n).toLocaleString(locale());        /* 58,700 */
 const kgUnit = (n) => `${kgFull(n)} <small>kg</small>`;               /* for figures */
 const epley = (w, r) => w * (1 + r / 30);
 const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -1248,7 +1505,7 @@ function build(client, period, range) {
 function readTheLog(m) {
   const out = [];
   const monthKey = (s) => s.slice(0, 7);
-  const monthName = (k) => MONTHS[+k.slice(5, 7) - 1] + " " + k.slice(0, 4);
+  const monthName = (k) => monthNames()[+k.slice(5, 7) - 1] + " " + k.slice(0, 4);
 
   /* 1. Load never went up across calendar months. One card if it is every
         exercise, one card each if it is only some of them. */
@@ -1263,16 +1520,18 @@ function readTheLog(m) {
   });
   if (flat.length) {
     const span = [...months].sort();
-    const range = `${monthName(span[0])} through ${monthName(span[span.length - 1])}`;
+    const range = tr("{a} through {b}", { a: monthName(span[0]), b: monthName(span[span.length - 1]) });
     if (flat.length === m.exercises.length && m.exercises.length > 1) {
       out.push({
-        sev: "flag", tag: "No added load", subject: "All " + m.exercises.length + " exercises", slot: null,
-        text: `Not one lift has gone up across ${span.length} months — ${range}. Each peaks at exactly the same weight every month (${flat.map(f => kg(f.peak) + " kg").join(" · ")}). The block is being repeated, not progressed.`
+        sev: "flag", key: "noload", tag: tr("No added load"), subject: tr("All {n} exercises", { n: m.exercises.length }), slot: null,
+        text: tr("Not one lift has gone up across {n} months — {range}. Each peaks at exactly the same weight every month ({peaks}). The block is being repeated, not progressed.",
+                 { n: span.length, range, peaks: flat.map(f => kg(f.peak) + " kg").join(" · ") })
       });
     } else {
       flat.forEach(f => out.push({
-        sev: "flag", tag: "No added load", subject: f.e.name, slot: f.e.slot,
-        text: `Tops out at ${kg(f.peak)} kg in every one of ${f.keys.length} months on record — ${range}. The block is being repeated, not progressed.`
+        sev: "flag", key: "noload", tag: tr("No added load"), subject: f.e.name, slot: f.e.slot,
+        text: tr("Tops out at {kg} kg in every one of {n} months on record — {range}. The block is being repeated, not progressed.",
+                 { kg: kg(f.peak), n: f.keys.length, range })
       }));
     }
   }
@@ -1286,8 +1545,9 @@ function readTheLog(m) {
   const allReset = opens.length && opens.every(o => o.vals.every(v => v[1] === o.vals[0][1]));
   if (allReset) {
     out.push({
-      sev: "flag", tag: "Blocks reset", subject: "Every exercise", slot: null,
-      text: `Each block opens on exactly the weight the last one opened on (${opens.map(o => kg(o.vals[0][1]) + " kg").join(" · ")}). Gains made inside a block are given back before the next one starts.`
+      sev: "flag", key: "reset", tag: tr("Blocks reset"), subject: tr("Every exercise"), slot: null,
+      text: tr("Each block opens on exactly the weight the last one opened on ({weights}). Gains made inside a block are given back before the next one starts.",
+               { weights: opens.map(o => kg(o.vals[0][1]) + " kg").join(" · ") })
     });
   }
 
@@ -1296,8 +1556,11 @@ function readTheLog(m) {
   if (long.length) {
     const worst = Math.max(...long.map(g => g.days));
     out.push({
-      sev: "flag", tag: "Rhythm", subject: "Time off between blocks", slot: null,
-      text: `${long.length} break${long.length > 1 ? "s" : ""} of two weeks or more, the longest ${worst} days. Three sessions in five days, then nothing for the rest of the month — that gap is the most likely reason load resets.`
+      sev: "flag", tag: tr("Rhythm"), subject: tr("Time off between blocks"), slot: null,
+      text: (long.length === 1
+        ? tr("One break of two weeks or more, the longest {d} days.", { d: worst })
+        : tr("{n} breaks of two weeks or more, the longest {d} days.", { n: long.length, d: worst }))
+        + " " + tr("Three sessions in five days, then nothing for the rest of the month — that gap is the most likely reason load resets.")
     });
   }
 
@@ -1310,8 +1573,9 @@ function readTheLog(m) {
       const handledBefore = Math.max(...e.inP.slice(0, i).map(p => p.weight));
       if (cur.weight > handledBefore && cur.weight >= prev.weight * 1.07 && cur.totalReps <= prev.totalReps * 0.75) {
         out.push({
-          sev: "watch", tag: "Jump too big", subject: e.name, slot: e.slot,
-          text: `On ${fmtDay(cur.date)} the load went ${kg(prev.weight)} → ${kg(cur.weight)} kg and total reps fell ${prev.totalReps} → ${cur.totalReps}. A smaller step, or one more session at ${kg(prev.weight)} kg, would hold the volume.`
+          sev: "watch", key: "jump", tag: tr("Jump too big"), subject: e.name, slot: e.slot,
+          text: tr("On {date} the load went {a} → {b} kg and total reps fell {ra} → {rb}. A smaller step, or one more session at {a} kg, would hold the volume.",
+                   { date: fmtDay(cur.date), a: kg(prev.weight), b: kg(cur.weight), ra: prev.totalReps, rb: cur.totalReps })
         });
         break;
       }
@@ -1323,13 +1587,18 @@ function readTheLog(m) {
     const since = daysBetween(m.lastPRAll.date, m.lastDate);
     if (since >= 28) {
       out.push({
-        sev: "watch", tag: "Last PR", subject: "Nothing new since " + fmtFull(m.lastPRAll.date), slot: null,
-        text: `${since} days without a heaviest-ever set. Every session since has repeated ground already covered.`
+        sev: "watch", key: "lastpr", tag: tr("Last PR"), subject: tr("Nothing new since {date}", { date: fmtFull(m.lastPRAll.date) }), slot: null,
+        text: tr("{n} days without a heaviest-ever set. Every session since has repeated ground already covered.", { n: since })
       });
     } else if (since <= 14) {
       out.push({
-        sev: "steady", tag: "Still climbing", subject: `${m.prs.length} personal record${m.prs.length === 1 ? "" : "s"} this period`, slot: null,
-        text: `The most recent was ${since === 0 ? "the last session" : since + " day" + (since === 1 ? "" : "s") + " ago"}, on ${fmtFull(m.lastPRAll.date)}. Load is still going somewhere.`
+        sev: "steady", key: "climbing",
+        tag: tr("Still climbing"),
+        subject: m.prs.length === 1 ? tr("{n} personal record this period", { n: 1 }) : tr("{n} personal records this period", { n: m.prs.length }),
+        slot: null,
+        text: tr("The most recent was {when}, on {date}. Load is still going somewhere.", {
+          when: since === 0 ? tr("the last session") : since === 1 ? tr("1 day ago") : tr("{n} days ago", { n: since }),
+          date: fmtFull(m.lastPRAll.date) })
       });
     }
   }
@@ -1339,8 +1608,9 @@ function readTheLog(m) {
     const weeks = Math.max(1, daysBetween(m.sessions[0].date, m.lastDate) / 7);
     const longest = Math.max(...m.gaps.map(g => g.days));
     out.push({
-      sev: "steady", tag: "Consistent", subject: "Showing up", slot: null,
-      text: `${(m.sessions.length / weeks).toFixed(1)} sessions a week across ${Math.round(weeks)} weeks, longest break ${longest} days. This is the part most logs fall down on.`
+      sev: "steady", key: "consistent", tag: tr("Consistent"), subject: tr("Showing up"), slot: null,
+      text: tr("{rate} sessions a week across {weeks} weeks, longest break {d} days. This is the part most logs fall down on.",
+               { rate: (m.sessions.length / weeks).toFixed(1), weeks: Math.round(weeks), d: longest })
     });
   }
 
@@ -1350,10 +1620,11 @@ function readTheLog(m) {
     if (tail.length < 3) return;
     const w = tail.map(p => p.weight);
     if (Math.max(...w) !== Math.min(...w)) return;
-    if (out.some(f => f.subject === e.name && f.tag === "No added load")) return;
+    if (out.some(f => f.subject === e.name && f.key === "noload")) return;
     out.push({
-      sev: "watch", tag: "Stalled now", subject: e.name, slot: e.slot,
-      text: `Three sessions in a row at ${kg(w[0])} kg, most recently ${fmtFull(tail[2].date)}. Time to change something: smaller jumps, an extra set, or a light week.`
+      sev: "watch", key: "stalled", tag: tr("Stalled now"), subject: e.name, slot: e.slot,
+      text: tr("Three sessions in a row at {kg} kg, most recently {date}. Time to change something: smaller jumps, an extra set, or a light week.",
+               { kg: kg(w[0]), date: fmtFull(tail[2].date) })
     });
   });
 
@@ -1366,13 +1637,14 @@ function readTheLog(m) {
   }).filter(c => c.hi > c.lo);
   if (climbers.length) {
     const best = climbers.sort((a, b) => (b.hi - b.lo) / b.lo - (a.hi - a.lo) / a.lo)[0];
-    const resets = out.some(f => f.tag === "Blocks reset" || f.tag === "No added load");
+    const resets = out.some(f => f.key === "reset" || f.key === "noload");
     out.push({
-      sev: "steady", tag: "Working", subject: best.name, slot: best.slot,
-      text: `${kg(best.lo)} → ${kg(best.hi)} kg, up ${Math.round((best.hi - best.lo) / best.lo * 100)}%, `
-        + `over ${best.n} sessions since ${fmtFull(best.from)}` + (resets
-          ? `. That climb happens inside each block — the programming is fine, it is the continuity that is not.`
-          : `. The best rate of gain on the board.`)
+      sev: "steady", key: "working", tag: tr("Working"), subject: best.name, slot: best.slot,
+      text: tr("{lo} → {hi} kg, up {pct}%, over {n} sessions since {date}.", {
+          lo: kg(best.lo), hi: kg(best.hi), pct: Math.round((best.hi - best.lo) / best.lo * 100), n: best.n, date: fmtFull(best.from) })
+        + " " + (resets
+          ? tr("That climb happens inside each block — the programming is fine, it is the continuity that is not.")
+          : tr("The best rate of gain on the board."))
     });
   }
 
@@ -1456,65 +1728,65 @@ function bodyBlock(m) {
     <div class="body-block">
       <div class="body-head">
         <div>
-          <div class="ex-table-cap">Fat mass · measured</div>
+          <div class="ex-table-cap">${tr("Fat mass · measured")}</div>
           ${ms.length
-            ? `<div class="body-latest"><span class="num big">${ms[0].fat.toFixed(1)}<small>%</small></span><span class="when">${fmtFull(ms[0].date)}${target ? ` · target ${target.value}%` : ""}</span></div>`
-            : `<div class="body-none">Nothing recorded yet${target ? ` — the target is ${target.value}%` : ""}.</div>`}
+            ? `<div class="body-latest"><span class="num big">${ms[0].fat.toFixed(1)}<small>%</small></span><span class="when">${fmtFull(ms[0].date)}${target ? " · " + tr("target {v}%", { v: target.value }) : ""}</span></div>`
+            : `<div class="body-none">${tr("Nothing recorded yet")}${target ? " — " + tr("the target is {v}%", { v: target.value }) : ""}.</div>`}
         </div>
-        ${canEdit() ? '<button class="act" type="button" data-open="measure">Add measurement</button>' : ""}
+        ${canEdit() ? `<button class="act" type="button" data-open="measure">${tr("Add measurement")}</button>` : ""}
       </div>
       ${ms.length > 1 ? `<div class="body-history">${ms.slice(0, 8).map((x, i) => {
           const prev = ms[i + 1];
           const d = prev ? x.fat - prev.fat : null;
           return `<span class="body-pt"><span class="num">${x.fat.toFixed(1)}%</span><span class="when">${fmtDay(x.date)}</span>${d !== null ? `<span class="delta ${d < 0 ? "up" : d > 0 ? "down" : "flat"}">${d > 0 ? "+" : ""}${d.toFixed(1)}</span>` : ""}</span>`;
-        }).join("")}${ms.length > 8 ? `<span class="body-pt when">…${ms.length - 8} earlier</span>` : ""}</div>` : ""}
+        }).join("")}${ms.length > 8 ? `<span class="body-pt when">…${tr("{n} earlier", { n: ms.length - 8 })}</span>` : ""}</div>` : ""}
     </div>`;
 }
 
 function goalsSection(m) {
   const gp = goalProgress(m);
-  const head = `<div class="sec-head"><h2>What ${esc(m.client.name)} is training for</h2>`;
+  const head = `<div class="sec-head"><h2>${tr("What {name} is training for", { name: esc(m.client.name) })}</h2>`;
   if (!gp) {
-    return `<section>${head}<span class="note">No goal set yet</span></div>
+    return `<section>${head}<span class="note">${tr("No goal set yet")}</span></div>
       <div class="plate goal-panel">
-        <div class="goal-empty" style="padding:14px 0 6px">No goal on record for ${esc(m.client.name)}. Add a <code>goals</code> entry to the roster — an aim, targets, and sessions a week — and progress shows here.</div>
+        <div class="goal-empty" style="padding:14px 0 6px">${tr("No goal on record for {name}.", { name: esc(m.client.name) })} ${canEdit() ? tr("Tell Claude the aim, the targets and the sessions a week, and progress shows here.") : ""}</div>
         ${bodyBlock(m)}
       </div>
     </section>`;
   }
   const stateChip = (st) => ({
-    done: '<span class="status-chip">✓ Reached</span>',
-    tracking: '<span class="status-chip" data-sev="watch">◆ In progress</span>',
-    behind: '<span class="status-chip" data-sev="flag">▲ Behind</span>',
-    none: '<span class="status-chip">— No data</span>',
-    untracked: '<span class="status-chip">— Not tracked</span>'
+    done: '<span class="status-chip">✓ ' + tr("Reached") + '</span>',
+    tracking: '<span class="status-chip" data-sev="watch">◆ ' + tr("In progress") + '</span>',
+    behind: '<span class="status-chip" data-sev="flag">▲ ' + tr("Behind") + '</span>',
+    none: '<span class="status-chip">— ' + tr("No data") + '</span>',
+    untracked: '<span class="status-chip">— ' + tr("Not tracked") + '</span>'
   }[st] || "");
   const rows = gp.targets.map(t => `
     <div class="target">
       <div class="t-label">${esc(t.label)}</div>
       <div class="t-target num">${esc(t.target)}</div>
       <div class="t-bar">${t.pct === null ? "" : `<span class="fill" style="width:${(t.pct * 100).toFixed(1)}%"></span>`}</div>
-      <div class="t-current num">${esc(t.current)}${t.toGo ? ` <span class="togo">· ${kg(t.toGo)} kg to go</span>` : t.toGoText ? ` <span class="togo">· ${esc(t.toGoText)}</span>` : ""}</div>
+      <div class="t-current num">${esc(t.current)}${t.toGo ? ` <span class="togo">· ${tr("{kg} kg to go", { kg: kg(t.toGo) })}</span>` : t.toGoText ? ` <span class="togo">· ${esc(t.toGoText)}</span>` : ""}</div>
       <div class="t-state">${stateChip(t.state)}</div>
     </div>`).join("");
   const f = gp.frequency;
   const freq = f ? `
     <div class="target">
-      <div class="t-label">Sessions a week</div>
+      <div class="t-label">${tr("Sessions a week")}</div>
       <div class="t-target num">${f.target}×</div>
       <div class="t-bar"><span class="fill" style="width:${(f.pct * 100).toFixed(1)}%"></span></div>
-      <div class="t-current num">${f.rate4.toFixed(1)} a week over the last 4 weeks <span class="togo">· ${f.rateAll.toFixed(1)} across the whole record</span></div>
+      <div class="t-current num">${tr("{n} a week over the last 4 weeks", { n: f.rate4.toFixed(1) })} <span class="togo">· ${tr("{n} across the whole record", { n: f.rateAll.toFixed(1) })}</span></div>
       <div class="t-state">${stateChip(f.state)}</div>
     </div>` : "";
   /* the aim is the headline of the panel, not a footnote in the section head */
   const summary = [
     ...gp.targets.map(t => `${t.label} ${t.target}`),
-    ...(f ? [`${f.target} sessions a week`] : [])
+    ...(f ? [tr("{n} sessions a week", { n: f.target })] : [])
   ].join(" · ");
   return `<section>${head}</div>
     <div class="plate goal-panel">
       ${gp.aim ? `<div class="goal-aim">
-        <span class="goal-eyebrow">Goal</span>
+        <span class="goal-eyebrow">${tr("Goal")}</span>
         <div class="aim">${esc(gp.aim)}</div>
         ${summary ? `<div class="aim-sub">${esc(summary)}</div>` : ""}
       </div>` : ""}
@@ -1645,7 +1917,7 @@ function topSetChart(host, ex) {
     }
     if (newMonth) {
       const ml = svgEl("text", { class: "tick-text x", x: X(i), y: H - pad.b + 30 });
-      ml.textContent = MONTHS[+p.date.slice(5, 7) - 1];
+      ml.textContent = monthNames()[+p.date.slice(5, 7) - 1];
       svg.appendChild(ml);
     }
   });
@@ -1656,7 +1928,7 @@ function topSetChart(host, ex) {
     const body = () => `<div class="t-head">${fmtFull(p.date)}</div>
       <div class="t-row"><span class="chip" style="background:var(--ex-${ex.slot})"></span>${esc(ex.name)}</div>
       ${p.sets.map((st, k) => `<div class="t-row">Set ${k + 1}${setNote(st) ? ` <span class="t-note">${esc(setNote(st))}</span>` : ""}<span class="v">${kg(st[0])} kg × ${st[1]}</span></div>`).join("")}
-      <div class="t-row" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:5px">Volume<span class="v">${Math.round(p.volume).toLocaleString("en-GB")} kg</span></div>
+      <div class="t-row" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:5px">Volume<span class="v">${Math.round(p.volume).toLocaleString(locale())} kg</span></div>
       <div class="t-row">Est. 1RM<span class="v">${kg(p.e1rm)} kg</span></div>
       ${p.pr ? '<div class="t-row" style="color:var(--accent);font-weight:600">Heaviest ever at this point</div>' : ""}`;
     hit.addEventListener("mousemove", e => showTip(e, body()));
@@ -1732,10 +2004,10 @@ function volumeChart(host, m) {
     }
 
     const hit = svgEl("rect", { class: "hit", x: cx - step / 2, y: pad.t, width: step, height: H - pad.t - pad.b, tabindex: "0",
-      "aria-label": `${fmtFull(s.date)}: ${Math.round(acc).toLocaleString("en-GB")} kilos total` });
+      "aria-label": `${fmtFull(s.date)}: ${Math.round(acc).toLocaleString(locale())} kilos total` });
     const body = () => `<div class="t-head">${fmtFull(s.date)}</div>` +
-      rows.map(r => `<div class="t-row"><span class="chip" style="background:var(--ex-${r.e.slot})"></span>${esc(r.e.name)}<span class="v">${Math.round(r.v).toLocaleString("en-GB")} kg</span></div>`).join("") +
-      `<div class="t-row" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:5px;font-weight:600">Total<span class="v">${Math.round(acc).toLocaleString("en-GB")} kg</span></div>`;
+      rows.map(r => `<div class="t-row"><span class="chip" style="background:var(--ex-${r.e.slot})"></span>${esc(r.e.name)}<span class="v">${Math.round(r.v).toLocaleString(locale())} kg</span></div>`).join("") +
+      `<div class="t-row" style="border-top:1px solid var(--rule);margin-top:5px;padding-top:5px;font-weight:600">Total<span class="v">${Math.round(acc).toLocaleString(locale())} kg</span></div>`;
     hit.addEventListener("mousemove", e => showTip(e, body()));
     hit.addEventListener("mouseleave", hideTip);
     hit.addEventListener("focus", () => { const r = hit.getBoundingClientRect(); showTip({ clientX: r.left + r.width / 2, clientY: r.top + 40 }, body()); });
@@ -1783,8 +2055,8 @@ function radarChart(host, mb) {
     const body = () => `<div class="t-head">${esc(g)}</div>
       <div class="t-row">Share of volume<span class="v">${(mb.share[i] * 100).toFixed(1)}%</span></div>
       <div class="t-row">Lifted<span class="v">${kgFull(mb.volume[i])} kg</span></div>
-      <div class="t-row">Reps as main muscle<span class="v">${mb.repsMain[i].toLocaleString("en-GB")}${mb.setsMain[i] ? ` · ${mb.setsMain[i]} sets` : ""}</span></div>
-      ${mb.repsAssist[i] ? `<div class="t-row">Reps assisting<span class="v">${mb.repsAssist[i].toLocaleString("en-GB")}</span></div>` : ""}`;
+      <div class="t-row">Reps as main muscle<span class="v">${mb.repsMain[i].toLocaleString(locale())}${mb.setsMain[i] ? ` · ${mb.setsMain[i]} sets` : ""}</span></div>
+      ${mb.repsAssist[i] ? `<div class="t-row">Reps assisting<span class="v">${mb.repsAssist[i].toLocaleString(locale())}</span></div>` : ""}`;
     hit.addEventListener("mousemove", e => showTip(e, body()));
     hit.addEventListener("mouseleave", hideTip);
     hit.addEventListener("focus", () => { const r = hit.getBoundingClientRect(); showTip({ clientX: r.left + r.width / 2, clientY: r.top + 20 }, body()); });
@@ -1923,10 +2195,10 @@ function renderClientView(m) {
   }
   const flags = readTheLog(m);
   const periodNote = m.period === "all"
-    ? `All ${m.all.length} sessions on record`
+    ? tr("All {n} sessions on record", { n: m.all.length })
     : m.period === "custom"
-      ? `${m.sessions.length} of ${m.all.length} sessions · ${fmtFull(m.range.from || m.all[0].date)} to ${fmtFull(m.range.to || m.lastDate)}`
-      : `${m.sessions.length} of ${m.all.length} sessions · ${m.period === "4w" ? "last 4 weeks" : "last 3 months"} up to ${fmtFull(m.lastDate)}`;
+      ? tr("{a} of {b} sessions · {from} to {to}", { a: m.sessions.length, b: m.all.length, from: fmtFull(m.range.from || m.all[0].date), to: fmtFull(m.range.to || m.lastDate) })
+      : tr("{a} of {b} sessions · {span} up to {date}", { a: m.sessions.length, b: m.all.length, span: m.period === "4w" ? tr("last 4 weeks") : tr("last 3 months"), date: fmtFull(m.lastDate) });
 
   if (m.empty) {
     redraws.length = 0;
@@ -1960,16 +2232,16 @@ function renderClientView(m) {
           ? `<button class="act page-link danger" type="button" data-open="delete" data-client="${esc(m.client.id)}">Delete</button>` : ""}</span>` : ""}
       </div>
       <div class="figures">
-        <div class="figure"><div class="v">${m.sessions.length}</div><div class="k">Sessions · ${esc(periodNote.toLowerCase().startsWith("all") ? "whole record" : "in period")}</div></div>
-        <div class="figure"><div class="v">${kgUnit(m.volume)}</div><div class="k">Total lifted</div></div>
-        <div class="figure"><div class="v">${m.totalReps.toLocaleString("en-GB")}</div><div class="k">Reps done · across ${m.setsLogged} sets</div></div>
-        <div class="figure"><div class="v">${m.avgGap === null ? "—" : m.avgGap.toFixed(1)} <small>days</small></div><div class="k">Average rest between sessions</div></div>
-        <div class="figure"><div class="v">${m.lastPRAll ? fmtDay(m.lastPRAll.date) : "—"}</div><div class="k">${m.lastPRAll ? `Last personal record · ${daysBetween(m.lastPRAll.date, m.lastDate)} days ago` : "No personal record yet"}</div></div>
+        <div class="figure"><div class="v">${m.sessions.length}</div><div class="k">${tr("Sessions")} · ${m.period === "all" ? tr("whole record") : tr("in period")}</div></div>
+        <div class="figure"><div class="v">${kgUnit(m.volume)}</div><div class="k">${tr("Total lifted")}</div></div>
+        <div class="figure"><div class="v">${m.totalReps.toLocaleString(locale())}</div><div class="k">${tr("Reps done · across {n} sets", { n: m.setsLogged })}</div></div>
+        <div class="figure"><div class="v">${m.avgGap === null ? "—" : m.avgGap.toFixed(1)} <small>${tr("days")}</small></div><div class="k">${tr("Average rest between sessions")}</div></div>
+        <div class="figure"><div class="v">${m.lastPRAll ? fmtDay(m.lastPRAll.date) : "—"}</div><div class="k">${m.lastPRAll ? tr("Last personal record · {n} days ago", { n: daysBetween(m.lastPRAll.date, m.lastDate) }) : tr("No personal record yet")}</div></div>
       </div>
     </section>
 
     <section>
-      <div class="sec-head"><h2>The coach's read</h2><span class="note">${flags.length} thing${flags.length === 1 ? "" : "s"} the log is saying</span></div>
+      <div class="sec-head"><h2>${tr("The coach's read")}</h2><span class="note">${flags.length === 1 ? tr("{n} thing the log is saying", { n: 1 }) : tr("{n} things the log is saying", { n: flags.length })}</span></div>
       <div class="flags">
         ${flags.map(f => `
           <article class="flag" data-sev="${f.sev}">
@@ -1983,7 +2255,7 @@ function renderClientView(m) {
     ${goalsSection(m)}
 
     <section>
-      <div class="sec-head"><h2>Top set, session by session</h2><span class="note">Chart and table hold the same sets · ring and PR mark a heaviest-ever · ${esc(periodNote)}</span></div>
+      <div class="sec-head"><h2>${tr("Top set, session by session")}</h2><span class="note">${tr("Chart and table hold the same sets · ring and PR mark a heaviest-ever")} · ${esc(periodNote)}</span></div>
       <div class="exercises">
         ${m.exercises.map(e => {
           const dir = e.delta > 0 ? "up" : e.delta < 0 ? "down" : "flat";
@@ -1997,7 +2269,7 @@ function renderClientView(m) {
             const cells = Array.from({ length: maxSets }, (_, k) => p.sets[k]
               ? `<td class="n${setNote(p.sets[k]) ? " noted" : ""}"${setNote(p.sets[k]) ? ` title="${esc(setNote(p.sets[k]))}"` : ""}>${kg(p.sets[k][0])} kg × ${p.sets[k][1]}</td>` : `<td class="n">—</td>`).join("");
             const gapRow = rest !== null && rest >= 14
-              ? `<tr class="gap-row"><td colspan="${maxSets + 3}"><span>${rest} days off</span></td></tr>` : "";
+              ? `<tr class="gap-row"><td colspan="${maxSets + 3}"><span>${tr("{n} days off", { n: rest })}</span></td></tr>` : "";
             return gapRow + `<tr>
                 <td class="day">${fmtDay(p.date)}</td>
                 ${cells}
@@ -2011,20 +2283,20 @@ function renderClientView(m) {
               <span class="ex-swatch" style="background:var(--ex-${e.slot})"></span>
               <div class="ex-title">
                 <h3>${esc(e.name)}</h3>
-                <div class="sub">${e.inP.length} sessions · ${allReps.toLocaleString("en-GB")} reps · ${Math.round(e.volume).toLocaleString("en-GB")} kg moved · heaviest ${kg(heaviest)} kg</div>
+                <div class="sub">${tr("{s} sessions · {r} reps · {v} kg moved · heaviest {h} kg", { s: e.inP.length, r: allReps.toLocaleString(locale()), v: Math.round(e.volume).toLocaleString(locale()), h: kg(heaviest) })}</div>
               </div>
               <div class="ex-now">
                 <div class="w">${kg(e.latest.weight)} <small>kg × ${e.latest.reps}</small></div>
-                <div class="delta ${dir}">${sign}${kg(e.delta)} kg over the period</div>
+                <div class="delta ${dir}">${tr("{d} kg over the period", { d: sign + kg(e.delta) })}</div>
               </div>
             </div>
             <div class="ex-body">
               <div>
                 <div class="cap-row">
-                  <div class="ex-table-cap">Heaviest set per session · ×n is the reps</div>
+                  <div class="ex-table-cap">${tr("Heaviest set per session · ×n is the reps")}</div>
                   ${e.inP.length > 14 ? `
                   <div class="slice" data-ex="${esc(e.name)}" role="group" aria-label="Which sessions the ${esc(e.name)} chart shows">
-                    <div class="seg slice-sizes">${SLICE_SIZES.map(k => `<button type="button" data-size="${k}">${k === "all" ? "All" : "Last " + k}</button>`).join("")}</div>
+                    <div class="seg slice-sizes">${SLICE_SIZES.map(k => `<button type="button" data-size="${k}">${k === "all" ? tr("All") : tr("Last {n}", { n: k })}</button>`).join("")}</div>
                     <input type="range" class="slice-pan" min="0" step="1" aria-label="Pan the ${esc(e.name)} chart">
                     <span class="slice-lab num"></span>
                   </div>` : ""}
@@ -2032,20 +2304,20 @@ function renderClientView(m) {
                 <div class="chart-scroll"><div class="chart-host" data-chart="topset" data-ex="${esc(e.name)}"></div></div>
               </div>
               <div>
-                <div class="ex-table-cap">Every set · weight × reps · reps counted per session, totalled at the foot</div>
+                <div class="ex-table-cap">${tr("Every set · weight × reps · reps counted per session, totalled at the foot")}</div>
                 <div class="ex-table-scroll" data-tail="1">
                 <table class="ex-table">
                   <thead><tr>
-                    <th>Date</th>
-                    ${Array.from({ length: maxSets }, (_, k) => `<th class="n"><span class="set-key" style="background:var(--ex-${e.slot}-${["a","b","c"][Math.min(k,2)]})"></span>Set ${k + 1}</th>`).join("")}
-                    <th class="n">Top set</th><th class="n">Reps</th>
+                    <th>${tr("Date")}</th>
+                    ${Array.from({ length: maxSets }, (_, k) => `<th class="n"><span class="set-key" style="background:var(--ex-${e.slot}-${["a","b","c"][Math.min(k,2)]})"></span>${tr("Set {n}", { n: k + 1 })}</th>`).join("")}
+                    <th class="n">${tr("Top set")}</th><th class="n">${tr("Reps")}</th>
                   </tr></thead>
                   <tbody>${rows}</tbody>
                   <tfoot><tr>
-                    <td class="lab">Total</td>
-                    <td class="n lab" colspan="${maxSets}">${allSets} sets</td>
+                    <td class="lab">${tr("Total")}</td>
+                    <td class="n lab" colspan="${maxSets}">${tr("{n} sets", { n: allSets })}</td>
                     <td class="n">${kg(heaviest)} kg</td>
-                    <td class="n">${allReps.toLocaleString("en-GB")}</td>
+                    <td class="n">${allReps.toLocaleString(locale())}</td>
                   </tr></tfoot>
                 </table>
                 </div>
@@ -2057,7 +2329,7 @@ function renderClientView(m) {
     </section>
 
     <section>
-      <div class="sec-head"><h2>Volume per session</h2><span class="note">Kilos moved per session — weight × reps, stacked by exercise</span></div>
+      <div class="sec-head"><h2>${tr("Volume per session")}</h2><span class="note">${tr("Kilos moved per session — weight × reps, stacked by exercise")}</span></div>
       <div class="plate wide-chart">
         <div class="chart-scroll"><div class="chart-host" data-chart="volume"></div></div>
         <div class="legend" style="margin-top:10px">
@@ -2067,7 +2339,7 @@ function renderClientView(m) {
     </section>
 
     <section>
-      <div class="sec-head"><h2>Muscle group balance</h2><span class="note">Share of the kilos lifted in the period, by the muscles each exercise works</span></div>
+      <div class="sec-head"><h2>${tr("Muscle group balance")}</h2><span class="note">${tr("Share of the kilos lifted in the period, by the muscles each exercise works")}</span></div>
       <div class="plate balance">
         ${m.balance.attributed > 0 ? `
         <div class="balance-body">
@@ -2075,58 +2347,58 @@ function renderClientView(m) {
           <div class="balance-list">
             ${m.balance.groups.map((g, i) => `
               <button type="button" class="balance-row${m.balance.share[i] ? "" : " zero"}" data-group="${g}" aria-pressed="false">
-                <span class="g">${g}</span>
+                <span class="g">${tr(g)}</span>
                 <span class="track"><span class="fill" style="width:${(m.balance.share[i] * 100).toFixed(1)}%"></span></span>
                 <span class="num pct">${m.balance.share[i] ? (m.balance.share[i] * 100).toFixed(1) + "%" : "—"}</span>
                 <span class="num kgv">${m.balance.share[i] ? kgFull(m.balance.volume[i]) + " kg" : ""}</span>
               </button>`).join("")}
           </div>
         </div>
-        <div class="balance-note">Each set counts in full for its primary muscle, half for the secondary, a quarter for the tertiary — from the exercise reference. Pick a group to light it up on the body below.</div>`
-        : `<div class="balance-note">No exercise in this period could be placed on a muscle, so there is nothing to balance yet.</div>`}
+        <div class="balance-note">${tr("Each set counts in full for its primary muscle, half for the secondary, a quarter for the tertiary — from the exercise reference. Pick a group to light it up on the body below.")}</div>`
+        : `<div class="balance-note">${tr("No exercise in this period could be placed on a muscle, so there is nothing to balance yet.")}</div>`}
         ${m.balance.inferred.length ? `<div class="balance-note">Not in the reference yet, placed by ${m.balance.inferred.every(x => x.tier === "near") ? "spelling" : "movement"}: ${m.balance.inferred.map(x => `${esc(x.name)} → ${x.muscles.map(esc).join(" / ")}${x.tier === "near" ? ` (as “${esc(x.via)}”)` : ""}`).join("; ")}. Run <span class="num">export_reference.py --ingest</span> to record ${m.balance.inferred.length === 1 ? "it" : "them"}.</div>` : ""}
         ${m.balance.pending.length ? `<div class="balance-note" style="color:var(--watch)">Not counted — no muscle could be determined for: ${m.balance.pending.map(esc).join(", ")} (${kgFull(m.balance.unattributed)} kg). Add ${m.balance.pending.length === 1 ? "it" : "them"} to the reference with add_exercise.py.</div>` : ""}
       </div>
     </section>
 
     ${m.balance.attributed > 0 ? `<section>
-      <div class="sec-head"><h2>Where the work landed</h2><span class="note">The same six groups on the body — drag to turn it, point at a muscle for its numbers</span></div>
+      <div class="sec-head"><h2>${tr("Where the work landed")}</h2><span class="note">${tr("The same six groups on the body — drag to turn it, point at a muscle for its numbers")}</span></div>
       <div class="plate figure3d">
         <div class="fig-body">
           <div class="fig-col">
             <div class="fig-layers">
-              <label class="switch"><input type="checkbox" data-layer="muscle" checked><span class="track"><span class="knob"></span></span><span class="lbl">Muscles</span></label>
-              <span class="fig-hint">off leaves the skeleton</span>
+              <label class="switch"><input type="checkbox" data-layer="muscle" checked><span class="track"><span class="knob"></span></span><span class="lbl">${tr("Muscles")}</span></label>
+              <span class="fig-hint">${tr("off leaves the skeleton")}</span>
             </div>
-            <div class="fig-stage" data-figure><div class="fig-wait">Loading the figure…</div></div>
+            <div class="fig-stage" data-figure><div class="fig-wait">${tr("Loading the anatomy…")}</div></div>
           </div>
           <div class="fig-side">
-            <div class="fig-read idle" data-figure-read><span class="g">Drag to turn the figure. Point at a muscle to see its share of the kilos and its reps.</span></div>
+            <div class="fig-read idle" data-figure-read><span class="g">${tr("Drag to turn the figure. Point at a muscle to see its share of the kilos and its reps — or pick a group above.")}</span></div>
             <div class="fig-scale">
               <div class="bar"></div>
-              <div class="ends"><span>no work</span><span data-figure-top>most this period</span></div>
+              <div class="ends"><span>${tr("no work")}</span><span data-figure-top>${tr("most this period")}</span></div>
             </div>
-            <p class="fig-credit" data-figure-credit hidden>Anatomy model: <a href="https://www.z-anatomy.com/" target="_blank" rel="noopener">Z-Anatomy</a>, from BodyParts3D — <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
+            <p class="fig-credit" data-figure-credit hidden>${tr("Anatomy model:")} <a href="https://www.z-anatomy.com/" target="_blank" rel="noopener">Z-Anatomy</a>, from BodyParts3D — <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
           </div>
         </div>
-        <div class="balance-note">Colour is the group's share of the kilos lifted in this period, palest for none through to the accent for the biggest share. Reps carry the same weighting as the kilos — a set counts in full for its primary muscle, half for the second, a quarter for the third — so the six groups together come to more than the ${m.totalReps.toLocaleString("en-GB")} reps actually done. Muscles no exercise in the log trains — neck, face, breathing — stay pale, and bone stays bone.</div>
+        <div class="balance-note">${tr("Colour is the group's share of the kilos lifted in this period, palest for none through to the deepest red for the biggest share. Reps carry the same weighting as the kilos — a set counts in full for its primary muscle, half for the second, a quarter for the third — so the six groups together come to more than the {n} reps actually done. Muscles no exercise in the log trains — neck, face, breathing — stay pale, and bone stays bone.", { n: m.totalReps.toLocaleString(locale()) })}</div>
       </div>
     </section>` : ""}
 
     <section>
-      <div class="sec-head"><h2>Rhythm</h2><span class="note">Days of rest before each session</span></div>
+      <div class="sec-head"><h2>${tr("Rhythm")}</h2><span class="note">${tr("Days of rest before each session")}</span></div>
       <div class="plate wide-chart">
         <div class="chart-scroll"><div class="chart-host" data-chart="rhythm"></div></div>
       </div>
     </section>
 
     <section>
-      <div class="sec-head"><h2>Session log</h2><span class="note">Every set as recorded · ${m.setsLogged} sets</span></div>
+      <div class="sec-head"><h2>${tr("Session log")}</h2><span class="note">${tr("Every set as recorded · {n} sets", { n: m.setsLogged })}</span></div>
       <div class="plate table-wrap"><div class="table-scroll">
         <table>
           <thead><tr>
-            <th>Date</th><th>Exercise</th><th class="n">Set 1</th><th class="n">Set 2</th><th class="n">Set 3</th>
-            <th class="n">Total reps</th><th class="n">Volume</th><th class="n">Rest</th>
+            <th>${tr("Date")}</th><th>${tr("Exercise")}</th><th class="n">${tr("Set {n}", { n: 1 })}</th><th class="n">${tr("Set {n}", { n: 2 })}</th><th class="n">${tr("Set {n}", { n: 3 })}</th>
+            <th class="n">${tr("Total reps")}</th><th class="n">${tr("Volume")}</th><th class="n">${tr("Rest")}</th>
           </tr></thead>
           <tbody>${sessionRows(m)}</tbody>
         </table>
@@ -2474,7 +2746,7 @@ function mountFigure(host, balance) {
   const wait = host.querySelector(".fig-wait");
   const maxShare = Math.max(...balance.share);
   const top = balance.groups[balance.share.indexOf(maxShare)];
-  if (topEl) topEl.textContent = maxShare ? `most — ${top} ${(maxShare * 100).toFixed(0)}%` : "most this period";
+  if (topEl) topEl.textContent = maxShare ? tr("most — {g} {pct}%", { g: tr(top), pct: (maxShare * 100).toFixed(0) }) : tr("most this period");
 
   const fail = (msg, err) => {
     if (err) console.error("Vos Sports figure:", err);
@@ -2494,8 +2766,8 @@ function mountFigure(host, balance) {
     if (!near()) return;
     armed = false; offWatch();
     ensureThree().then(THREE => {
-      try { start(THREE); } catch (e) { fail("The figure could not be drawn here.", e); }
-    }).catch(e => fail("The figure needs a connection the first time it is opened. Everything else on this page works without one.", e));
+      try { start(THREE); } catch (e) { fail(tr("The figure could not be drawn here."), e); }
+    }).catch(e => fail(tr("The figure needs a connection the first time it is opened. Everything else on this page works without one."), e));
   };
   /* plain listeners and a plain call: rAF does not run while the tab is in
      the background, and a figure that only appears once you happen to be
@@ -2509,7 +2781,7 @@ function mountFigure(host, balance) {
 
   function start(THREE) {
     if (!host.isConnected) return;
-    if (wait) wait.textContent = "Loading the anatomy\u2026";
+    if (wait) wait.textContent = tr("Loading the anatomy…");
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(38, 1, .1, 100);
     camera.position.set(.95, 1.20, 2.75);
@@ -2703,8 +2975,8 @@ function mountFigure(host, balance) {
     const fmtPct = (x) => (x * 100).toFixed(1) + "%";
     function numbers(i) {
       return `<div class="nums">` +
-        `<div><span class="v">${balance.share[i] ? fmtPct(balance.share[i]) : "—"}</span><span class="k">of the kilos</span></div>` +
-        `<div><span class="v">${balance.reps[i].toLocaleString("en-GB")}</span><span class="k">reps</span></div>` +
+        `<div><span class="v">${balance.share[i] ? fmtPct(balance.share[i]) : "—"}</span><span class="k">${tr("of the kilos")}</span></div>` +
+        `<div><span class="v">${balance.reps[i].toLocaleString(locale())}</span><span class="k">${tr("reps")}</span></div>` +
         `<div><span class="v">${kgFull(balance.volume[i])}</span><span class="k">kg</span></div>` +
         `</div>`;
     }
@@ -2713,21 +2985,21 @@ function mountFigure(host, balance) {
       if (i < 0) return;
       const list = byCat[g] || [];
       read.classList.remove("idle");
-      read.innerHTML = `<span class="g">${esc(g)}</span><span class="m">${list.length} muscle${list.length === 1 ? "" : "s"} lit on the body</span>` + numbers(i);
+      read.innerHTML = `<span class="g">${esc(tr(g))}</span><span class="m">${list.length === 1 ? tr("{n} muscle lit on the body", { n: 1 }) : tr("{n} muscles lit on the body", { n: list.length })}</span>` + numbers(i);
       hilite(g); setGlow(list, g); hot = g;
     }
     function showBone(part) {
       read.classList.remove("idle");
       read.innerHTML = `<span class="g">${esc(part.label)}</span>` +
-        `<span class="m">Bone${part.side ? " · " + part.side.toLowerCase() : ""}</span>` +
-        `<span class="m" style="margin-top:10px">Bones carry no numbers — the colour on this page is the work the muscles did.</span>`;
+        `<span class="m">${tr("Bone")}${part.side ? " · " + tr(part.side === "Left" ? "left" : "right") : ""}</span>` +
+        `<span class="m" style="margin-top:10px">${tr("Bones carry no numbers — the colour on this page is the work the muscles did.")}</span>`;
       hilite(null); setGlow(sameMuscle(part.label), FIG_FRAME); hot = null;
     }
     function showPart(part) {
       if (part && part.cat === FIG_FRAME) return showBone(part);
       if (!part) {
         read.classList.add("idle");
-        read.innerHTML = `<span class="g">Drag to turn the figure. Point at a muscle to see its share of the kilos and its reps — or pick a group above.</span>`;
+        read.innerHTML = `<span class="g">${tr("Drag to turn the figure. Point at a muscle to see its share of the kilos and its reps — or pick a group above.")}</span>`;
         hilite(null); setGlow(null); hot = null; return;
       }
       const i = MUSCLE_GROUPS.indexOf(part.cat);
@@ -2735,10 +3007,10 @@ function mountFigure(host, balance) {
       const layered = held && held.part === part && held.under > 1;   /* something lies under this one */
       read.classList.remove("idle");
       read.innerHTML =
-        `<span class="g">${esc(part.cat)}</span>` +
-        `<span class="m">${esc(part.label)}${part.side ? " · " + part.side.toLowerCase() : ""}${part.sub ? " — " + esc(part.sub) : ""}${layered ? " · tap again for the layer under it" : ""}</span>` +
+        `<span class="g">${esc(tr(part.cat))}</span>` +
+        `<span class="m">${esc(part.label)}${part.side ? " · " + tr(part.side === "Left" ? "left" : "right") : ""}${part.sub ? " — " + esc(part.sub) : ""}${layered ? " · " + tr("tap again for the layer under it") : ""}</span>` +
         numbers(i) +
-        (own && own.volume ? `<span class="m" style="margin-top:10px">${esc(part.ref)} alone: ${kgFull(own.volume)} kg · ${Math.round(own.reps).toLocaleString("en-GB")} reps</span>` : "");
+        (own && own.volume ? `<span class="m" style="margin-top:10px">${tr("{muscle} alone: {kg} kg · {reps} reps", { muscle: esc(part.ref), kg: kgFull(own.volume), reps: Math.round(own.reps).toLocaleString(locale()) })}</span>` : "");
       hilite(part.cat); setGlow(sameMuscle(part.label), part.cat); hot = part.cat;
     }
     showPart(null);
@@ -2904,7 +3176,7 @@ function sessionRows(m) {
         <td><span class="ex-cell"><span class="chip" style="background:var(--ex-${e.slot})"></span>${esc(e.name)}</span>${pt && pt.pr ? '<span class="pr-badge">PR</span>' : ""}</td>
         ${cells}
         <td class="n">${reps}</td>
-        <td class="n">${Math.round(vol).toLocaleString("en-GB")} kg</td>
+        <td class="n">${Math.round(vol).toLocaleString(locale())} kg</td>
         ${i === 0 ? `<td class="n" rowspan="${names.length}" style="vertical-align:top">${rest}</td>` : ""}
       </tr>${noteRow}`;
     }).join("");
@@ -2928,7 +3200,7 @@ function renderAllView() {
         <div class="figure"><div class="v">${ROSTER.length}</div><div class="k">Client${ROSTER.length === 1 ? "" : "s"} on the roster</div></div>
         <div class="figure"><div class="v">${sessions}</div><div class="k">Sessions logged</div></div>
         <div class="figure"><div class="v">${kgUnit(volume)}</div><div class="k">Total lifted, everyone</div></div>
-        <div class="figure"><div class="v">${reps.toLocaleString("en-GB")}</div><div class="k">Reps done, everyone</div></div>
+        <div class="figure"><div class="v">${reps.toLocaleString(locale())}</div><div class="k">Reps done, everyone</div></div>
         <div class="figure"><div class="v">${fmtDay(latest)}</div><div class="k">Most recent session · ${fmtFull(latest)}</div></div>
       </div>
     </section>
@@ -2951,7 +3223,7 @@ function renderAllView() {
                 <td class="num" style="font-size:12.5px">${fmtFull(m.lastDate)}</td>
                 <td class="n">${m.sessions.length}</td>
                 <td class="n">${kgFull(m.volume)}</td>
-                <td class="n">${m.totalReps.toLocaleString("en-GB")}</td>
+                <td class="n">${m.totalReps.toLocaleString(locale())}</td>
                 <td class="n">${m.avgGap === null ? "—" : m.avgGap.toFixed(1) + "d"}</td>
                 <td class="n">${m.lastPRAll ? daysBetween(m.lastPRAll.date, m.lastDate) + "d ago" : "—"}</td>
                 <td><span class="status-chip" data-sev="${worst}">${worst === "flag" ? "▲" : worst === "watch" ? "◆" : "✓"} ${count ? count + " to address" : "On track"}</span></td>
@@ -2985,12 +3257,12 @@ function renderBar() {
   const cl = document.getElementById("console-link");
   cl.hidden = PAGE_MODE !== "client" || APP_BUILD; cl.href = CONSOLE_URL;
   const rs = document.getElementById("roster-seg");
-  rs.innerHTML = `<button data-client="__all" aria-pressed="${state.client === "__all"}">All clients</button>` +
+  rs.innerHTML = `<button data-client="__all" aria-pressed="${state.client === "__all"}">${tr("All clients")}</button>` +
     ROSTER.map(c => `<button data-client="${esc(c.id)}" aria-pressed="${state.client === c.id}">${esc(c.name)}</button>`).join("");
   rs.querySelectorAll("button").forEach(b => b.addEventListener("click", () => { state.client = b.dataset.client; render(); }));
 
   const ps = document.getElementById("period-seg");
-  const periods = [["4w", "4 weeks"], ["3m", "3 months"], ["all", "All"], ["custom", "Custom…"]];
+  const periods = [["4w", tr("4 weeks")], ["3m", tr("3 months")], ["all", tr("All")], ["custom", tr("Custom…")]];
   ps.innerHTML = periods.map(([k, l]) => `<button data-period="${k}" aria-pressed="${state.period === k}">${l}</button>`).join("");
   ps.querySelectorAll("button").forEach(b => b.addEventListener("click", () => {
     state.period = b.dataset.period;
@@ -3051,22 +3323,21 @@ function render(opts) {
   if (isAll) {
     renderAllView();
     document.getElementById("foot").innerHTML =
-      `Every figure on this page is computed from the logged sets — nothing is entered by hand. Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any before it.`;
+      tr("Every figure on this page is computed from the logged sets — nothing is entered by hand. Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any before it.");
   } else {
     const client = ROSTER.find(c => c.id === state.client) || ROSTER[0];
     const m = build(client, state.period, state.range);
     renderClientView(m);
     const imported = Object.keys(IMPORTED[m.client.id] || {}).length;
     void imported;
-    if (m.noData) { document.getElementById("foot").innerHTML = `${esc(m.client.name)} — no sessions on record yet.`; paintStorageNote(); hideTip(); restoreAnchor(keep); return; }
+    if (m.noData) { document.getElementById("foot").innerHTML = tr("{name} — no sessions on record yet.", { name: esc(m.client.name) }); paintStorageNote(); hideTip(); restoreAnchor(keep); return; }
     document.getElementById("foot").innerHTML =
       (m.client.demo
-        ? `<strong>${esc(m.client.name)} is sample data.</strong> The ${m.client.sessions.length} sessions this page ships with were generated as a worked example of a programme that is progressing, to sit beside a real one that is not — no such client exists${imported ? ", though the imported sessions below are yours" : ""}. `
-        : (m.client.source ? `Source: <span class="num">${esc(m.client.source)}</span>. ${m.client.sourceNote ? esc(m.client.sourceNote) + " " : ""}` : "")) +
-      `${m.all.length} sessions between ${fmtFull(m.all[0].date)} and ${fmtFull(m.lastDate)}, ${m.all.reduce((t, s) => t + sessionSets(s), 0)} sets` +
-      (imported ? `, ${imported} of them imported here` : "") +
-      `. Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any logged before it.` +
-      (PAGE_MODE === "client" ? ` This page is ${esc(m.client.name)}'s own and is updated by the trainer.` : PAGE_MODE === "mirror" ? " This is a read-only mirror of the console; sessions are logged there." : "");
+        ? `<strong>${tr("{name} is sample data.", { name: esc(m.client.name) })}</strong> ` + tr("The {n} sessions this page ships with were generated as a worked example of a programme that is progressing, to sit beside a real one that is not — no such client exists.", { n: m.client.sessions.length }) + " "
+        : (m.client.source ? `${tr("Source:")} <span class="num">${esc(m.client.source)}</span>. ${m.client.sourceNote ? esc(m.client.sourceNote) + " " : ""}` : "")) +
+      tr("{n} sessions between {from} and {to}, {sets} sets.", { n: m.all.length, from: fmtFull(m.all[0].date), to: fmtFull(m.lastDate), sets: m.all.reduce((t, s) => t + sessionSets(s), 0) }) +
+      " " + tr("Volume is weight × reps; estimated 1RM uses the Epley formula. A personal record means a heavier top set than any logged before it.") +
+      (PAGE_MODE === "client" ? " " + tr("This page is {name}'s own and is updated by the trainer.", { name: esc(m.client.name) }) : PAGE_MODE === "mirror" ? " " + tr("This is a read-only mirror of the console; sessions are logged there.") : "");
   }
   paintStorageNote();
   hideTip();
@@ -3840,14 +4111,81 @@ document.addEventListener("click", (e) => {
   if (b.dataset.open === "apppass") openAppPass();
 });
 
+/* ═══ your account ══════════════════════════════════════════════════
+   One button for the three things a person needs that are theirs and not
+   the training: the language they read in, the password they come back
+   with, and the way out. Password and log out only exist where there is
+   a login — the console artifact has none. */
+function paintStatic() {
+  document.documentElement.lang = LANG;
+  document.querySelectorAll("[data-tr]").forEach(el => { el.textContent = tr(el.dataset.tr); });
+  document.querySelectorAll("#lang-seg [data-lang]").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === LANG)));
+  const pb = document.getElementById("profile-label");
+  if (pb) pb.textContent = tr("Profile");
+  const btn = document.getElementById("profile-btn");
+  if (btn) btn.setAttribute("aria-label", tr("Your account — language, password, log out"));
+}
+function setLang(next) {
+  if (next === LANG) return;
+  LANG = next;
+  try { localStorage.setItem("vos-lang", LANG); } catch (e) {}
+  paintStatic();
+  if (document.body.classList.contains("locked")) return;   /* nothing rendered yet */
+  render();
+}
+function openProfile() {
+  const dlg = document.getElementById("profile-dlg");
+  const signedIn = !!ROSTER_SEALED;
+  const canChange = signedIn && wrapsOnDevice().length > 0;
+  const who = PAGE_MODE === "client" && ROSTER[0] ? ROSTER[0].name : PAGE_MODE === "mirror" ? tr("Trainer") : "";
+  document.getElementById("pf-who").textContent = who
+    ? tr("Signed in as {name}.", { name: who })
+    : tr("The language you read this page in.");
+  document.getElementById("pf-pw").hidden = !canChange;
+  document.getElementById("pf-save").hidden = !canChange;
+  document.getElementById("pf-logout").hidden = !signedIn;
+  ["pf-old", "pf-new1", "pf-new2"].forEach(id => { document.getElementById(id).value = ""; });
+  document.getElementById("pf-out").innerHTML = "";
+  paintStatic();
+  dlg.showModal();
+}
+async function savePassword() {
+  const out = document.getElementById("pf-out");
+  const old = document.getElementById("pf-old").value;
+  const a = document.getElementById("pf-new1").value, b = document.getElementById("pf-new2").value;
+  const bad = (msg) => { out.innerHTML = `<div class="parse-out bad">${esc(msg)}</div>`; };
+  if (a.length < 8) return bad(tr("Use at least 8 characters."));
+  if (a !== b) return bad(tr("The two passwords don't match."));
+  /* the current password is checked against the wrap this device holds, so a
+     phone someone else picked up cannot quietly be given a new password */
+  let ok = false;
+  for (const w of wrapsOnDevice()) {
+    try { const pk = await vaultKeys(old, w.salt); await vaultOpen(w, pk); ok = true; break; } catch (e) {}
+  }
+  if (!ok) return bad(tr("That is not your current password."));
+  if (!VAULT || !VAULT.raw) return bad(tr("Something went wrong saving the password. Try again."));
+  try {
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const pk = await vaultKeys(a, b64e(salt));
+    const wrap = { salt: b64e(salt), ...(await vaultSeal(b64e(VAULT.raw), pk)) };
+    localStorage.setItem("vos-sports:wraps", JSON.stringify([wrap]));   /* the old password stops working */
+    document.getElementById("profile-dlg").close();
+    toast(tr("New password saved on this device."));
+  } catch (e) { bad(tr("Something went wrong saving the password. Try again.")); }
+}
+function logOut() {
+  try { localStorage.removeItem("vos-sports:key"); } catch (e) {}
+  location.reload();
+}
+
 /* ═══ light / dark ══════════════════════════════════════════════════
    Three states, not two: "auto" follows the device, and the two explicit
    choices override it. Auto stamps nothing on the root element, which is
    exactly what the stylesheet's prefers-color-scheme block needs. */
 const THEMES = [
-  { id: "auto",  label: "Auto",  icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M8 2a6 6 0 0 0 0 12z" fill="currentColor"/></svg>' },
-  { id: "light", label: "Light", icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.1" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/></g></svg>' },
-  { id: "dark",  label: "Dark",  icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.9 5.9 0 1 0 7.1 7.1z" fill="currentColor"/></svg>' }
+  { id: "auto",  label: "Auto", nl: "Auto",  icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M8 2a6 6 0 0 0 0 12z" fill="currentColor"/></svg>' },
+  { id: "light", label: "Light", nl: "Licht", icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3.1" stroke="currentColor" stroke-width="1.6"/><g stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/></g></svg>' },
+  { id: "dark",  label: "Dark", nl: "Donker",  icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 9.6A5.8 5.8 0 0 1 6.4 2.5a5.9 5.9 0 1 0 7.1 7.1z" fill="currentColor"/></svg>' }
 ];
 let themeIdx = 0;
 try {
@@ -3861,18 +4199,24 @@ function applyTheme() {
   if (t.id === "auto") document.documentElement.removeAttribute("data-theme");
   else document.documentElement.setAttribute("data-theme", t.id);
   document.getElementById("theme-icon").innerHTML = t.icon;
-  document.getElementById("theme-label").textContent = t.label;
+  document.getElementById("theme-label").textContent = LANG === "nl" ? t.nl : t.label;
   const next = THEMES[(themeIdx + 1) % THEMES.length];
   document.getElementById("theme-btn").setAttribute("aria-label",
     `Background: ${t.label.toLowerCase()}${t.id === "auto" ? " (follows your device)" : ""}. Switch to ${next.label.toLowerCase()}.`);
   try { localStorage.setItem("vos-theme", t.id); } catch (e) {}
   document.dispatchEvent(new CustomEvent("vos-theme"));
 }
+document.getElementById("profile-btn").addEventListener("click", openProfile);
+document.getElementById("pf-close").addEventListener("click", () => document.getElementById("profile-dlg").close());
+document.getElementById("pf-save").addEventListener("click", savePassword);
+document.getElementById("pf-logout").addEventListener("click", logOut);
+document.querySelectorAll("#lang-seg [data-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
 document.getElementById("theme-btn").addEventListener("click", () => {
   themeIdx = (themeIdx + 1) % THEMES.length;
   applyTheme();
 });
 applyTheme();
+paintStatic();
 
 function boot() {
   if (!state.client) state.client = ROSTER[0].id;
@@ -3939,7 +4283,7 @@ async function tryUnlock() {
   const pass = document.getElementById("lock-pass").value;
   const btn = document.getElementById("lock-go");
   if (!pass) return;
-  btn.disabled = true; lockMsg("Checking…");
+  btn.disabled = true; lockMsg(tr("Checking…"));
   try {
     let opened = null;
     /* 2. a password chosen on this device */
@@ -3960,8 +4304,8 @@ async function tryUnlock() {
   } catch (e) {
     wrongTries++;
     lockMsg(wrongTries >= 2
-      ? "Still not right. Use \u201cForgotten your password?\u201d below and your setup code."
-      : "That password doesn't open this log.");
+      ? tr("Still not right. Use \u201cForgotten your password?\u201d below and your setup code.")
+      : tr("That password doesn't open this log."));
     if (wrongTries >= 2) document.getElementById("lock-forgot").classList.add("cue");
     btn.disabled = false;
     document.getElementById("lock-pass").select();
@@ -3971,7 +4315,7 @@ async function trySetupCode() {
   const code = normaliseCode(document.getElementById("lock-code").value);
   const btn = document.getElementById("lock-code-go");
   if (!code) return;
-  btn.disabled = true; lockMsg("Checking…");
+  btn.disabled = true; lockMsg(tr("Checking…"));
   try {
     let dk = null, name = "";
     for (const blob of ROSTER_SEALED.blobs) {
@@ -3986,21 +4330,21 @@ async function trySetupCode() {
     pendingDataKey = dk;
     const again = wrapsOnDevice().length > 0;
     document.getElementById("lock-hello").textContent = again
-      ? (name ? `Welcome back, ${name.split(" ")[0]}. Choose a new password — the old one stops working.` : "Choose a new password. The old one stops working.")
-      : (name ? `Hello ${name}. This is your own page — choose a password for it.` : "Choose a password for your page.");
+      ? (name ? tr("Welcome back, {first}. Choose a new password — the old one stops working.", { first: name.split(" ")[0] }) : tr("Choose a new password. The old one stops working."))
+      : (name ? tr("Hello {name}. This is your own page — choose a password for it.", { name }) : tr("Choose a password for your page."));
     lockStep("choose"); btn.disabled = false;
     document.getElementById("lock-new1").focus();
   } catch (e) {
-    lockMsg("That setup code isn't right. Check it with your trainer — a new one can always be sent."); btn.disabled = false;
+    lockMsg(tr("That setup code isn't right. Check it with your trainer — a new one can always be sent.")); btn.disabled = false;
     document.getElementById("lock-code").select();
   }
 }
 async function chooseAndOpen() {
   const a = document.getElementById("lock-new1").value, b = document.getElementById("lock-new2").value;
   const btn = document.getElementById("lock-choose-go");
-  if (a.length < 8) { lockMsg("Use at least 8 characters."); document.getElementById("lock-new1").focus(); return; }
-  if (a !== b) { lockMsg("The two passwords don't match."); return; }
-  btn.disabled = true; lockMsg("Saving\u2026", true);
+  if (a.length < 8) { lockMsg(tr("Use at least 8 characters.")); document.getElementById("lock-new1").focus(); return; }
+  if (a !== b) { lockMsg(tr("The two passwords don't match.")); return; }
+  btn.disabled = true; lockMsg(tr("Saving…"), true);
   const had = wrapsOnDevice().length > 0;
   try {
     const salt = crypto.getRandomValues(new Uint8Array(16));
@@ -4015,9 +4359,9 @@ async function chooseAndOpen() {
     pendingDataKey = null;
     const replaced = had;
     await unlockWith(keys);
-    toast(replaced ? "New password saved on this device." : "Password saved on this device.");
+    toast(replaced ? tr("New password saved on this device.") : tr("Password saved on this device."));
   } catch (e) {
-    lockMsg("Something went wrong saving the password. Try again."); btn.disabled = false;
+    lockMsg(tr("Something went wrong saving the password. Try again.")); btn.disabled = false;
   }
 }
 if (ROSTER_SEALED) {
@@ -4027,7 +4371,7 @@ if (ROSTER_SEALED) {
   document.getElementById("lock-pass").addEventListener("keydown", e => { if (e.key === "Enter") tryUnlock(); });
   const toCode = (why) => { lockStep("code"); if (why) lockMsg(why, true); document.getElementById("lock-code").value = ""; document.getElementById("lock-code-go").disabled = true; document.getElementById("lock-code").focus(); };
   document.getElementById("lock-first").addEventListener("click", () => toCode());
-  document.getElementById("lock-forgot").addEventListener("click", () => toCode("Enter your setup code and choose a new password."));
+  document.getElementById("lock-forgot").addEventListener("click", () => toCode(tr("Enter your setup code and choose a new password.")));
   const codeEl = document.getElementById("lock-code");
   codeEl.addEventListener("input", () => { const v = normaliseCode(codeEl.value); if (v !== codeEl.value) codeEl.value = v; document.getElementById("lock-code-go").disabled = v.replace("-", "").length < 8; });
   const n1 = document.getElementById("lock-new1"), n2 = document.getElementById("lock-new2");
